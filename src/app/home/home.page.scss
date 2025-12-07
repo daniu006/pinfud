@@ -1,0 +1,140 @@
+
+:host {
+  --ion-background-color: #ffffff !important;
+}
+/* ======= CONTENEDOR PRINCIPAL ======= */
+.main-content {
+    padding: 0;
+    background: #fafafa;
+}
+
+/* ======= HEADER ======= */
+.header-toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+
+.app-title {
+    font-weight: 700;
+    font-size: 24px;
+    margin: 0;
+    color: #000;
+}
+
+/* ======= CATEGORÍAS SCROLL ======= */
+.categories-hero {
+    margin-top: 12px;
+    padding: 8px 0;
+}
+
+.categories-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    padding: 0 14px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.category-chip {
+    color: #6d6d6d;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+    align-items: center;
+    transition: 0.2s ease;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+}
+
+.category-chip.active {
+    color: #4E070C;
+    border-bottom-color: #4E070C;
+    font-weight: 700;
+}
+
+/* ======= GRID TIPO PINTEREST ======= */
+.pinterest-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    padding: px;
+}
+
+/* CARD DE CADA PRODUCTO */
+.food-card {
+    border-radius: 18px;
+    overflow: hidden;
+    --background: white;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+}
+
+.food-card[data-height="small"] {
+    height: 180px;
+}
+
+.food-card[data-height="medium"] {
+    height: 240px;
+}
+
+.food-card[data-height="large"] {
+    height: 290px;
+}
+
+.food-image {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+}
+
+.emoji-placeholder {
+    font-size: 40px;
+}
+
+.food-title {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.food-content {
+    padding: 10px 14px;
+}
+
+.food-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ======= TAB BAR CUSTOM ======= */
+.custom-tab-bar {
+    --background: white;
+    border-top: 1px solid #ddd;
+    padding: 4px 0;
+}
+
+.tab-selected {
+    color: #4E070C !important;
+
+    ion-icon {
+        transform: scale(1.15);
+        transition: 0.2s ease-in-out;
+    }
+}
+
+.tab-icon {
+    font-size: 24px;
+}
+
+.tab-label {
+    font-size: 13px;
+}

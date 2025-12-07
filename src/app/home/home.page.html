@@ -1,13 +1,79 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>home</ion-title>
+
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header-toolbar">
+    <div class="header-content">
+      <h1 class="app-title">PinFüd</h1>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="main-content" fullscreen>
+
+  <!-- Categories Hero Scroll -->
+  <div class="categories-hero">
+    <div class="categories-scroll">
+      <div
+        *ngFor="let category of categories"
+        class="category-chip"
+        [class.active]="selectedCategory === category.id"
+        (click)="selectCategory(category.id)"
+      >
+        <span class="category-name">{{ category.name }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pinterest-Style Masonry Grid -->
+  <div class="pinterest-grid">
+    <ion-card
+      *ngFor="let item of foodItems"
+      class="food-card"
+      [attr.data-height]="item.height"
+      (click)="openItem(item)"
+    >
+      <div class="food-image">
+        <div class="emoji-placeholder">{{ item.image }}</div>
+      </div>
+
+      <ion-card-header>
+        <ion-card-title class="food-title">
+          {{ item.title }}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="food-content">
+        <div class="food-info">
+          <span class="food-price">{{ item.price }}</span>
+          <span class="food-rating">⭐ {{ item.rating }}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
 </ion-content>
+
+<!-- Footer / Tab Bar -->
+<ion-footer class="ion-no-border">
+  <ion-tab-bar class="custom-tab-bar">
+
+    <ion-tab-button
+      tab="home"
+      [class.tab-selected]="activeTab === 'home'"
+      (click)="setActiveTab('home')"
+    >
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button
+      tab="messages"
+      [class.tab-selected]="activeTab === 'messages'"
+      (click)="setActiveTab('messages')"
+    >
+      <ion-icon name="chatbubbles"></ion-icon>
+      <ion-label>Messages</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-footer>
+
