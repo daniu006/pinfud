@@ -10,8 +10,8 @@ IonInput,
 IonButton, 
 IonIcon 
 } from '@ionic/angular/standalone';
-import { NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
+import { NavController } from '@ionic/angular';
 import { 
   logoGoogle, 
   logoFacebook, 
@@ -33,7 +33,8 @@ import {
     IonButton, 
     IonIcon]
 })
-export class LoginPage { 
+export class LoginPage 
+{ 
 
   constructor(private navCtrl: NavController) {
     addIcons({

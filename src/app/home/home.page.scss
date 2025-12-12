@@ -1,140 +1,187 @@
-
 :host {
   --ion-background-color: #ffffff !important;
 }
-/* ======= CONTENEDOR PRINCIPAL ======= */
-.main-content {
-    padding: 0;
-    background: #fafafa;
+
+/* ======= HEADER OPTIMIZADO ======= */
+ion-header {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-/* ======= HEADER ======= */
-.header-toolbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 12px;
+.top-toolbar {
+  --background: #fff;
+  --min-height: 50px;
+  --padding-top: 4px;
+  --padding-bottom: 4px;
+  --padding-start: 0;
+  --padding-end: 0;
 }
 
-.app-title {
-    font-weight: 700;
-    font-size: 24px;
-    margin: 0;
-    color: #000;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 6px 16px;
 }
+
+.top-left {
+  display: flex;
+  align-items: center;
+}
+
+.top-left ion-icon {
+  font-size: 28px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.top-left ion-icon:active {
+  color: #4E070C;
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+}
+
+.profile-btn {
+  width: 36px;
+  height: 36px;
+  background: #f5f5f5;
+  border-radius: 50%;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profile-btn ion-icon {
+  font-size: 20px;
+  color: #4E070C;
+}
+
+.profile-btn:active {
+  transform: scale(0.92);
+  background: #ececec;
+}
+
 
 /* ======= CATEGORÍAS SCROLL ======= */
 .categories-hero {
-    margin-top: 12px;
-    padding: 8px 0;
+  margin-top: 4px;
 }
 
 .categories-scroll {
-    display: flex;
-    overflow-x: auto;
-    gap: 12px;
-    padding: 0 14px;
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 8px 14px;
+}
 
-    &::-webkit-scrollbar {
-        display: none;
-    }
+.categories-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .category-chip {
-    color: #6d6d6d;
-    padding: 8px 16px;
-    font-size: 16px;
-    font-weight: 600;
-    white-space: nowrap;
-    align-items: center;
-    transition: 0.2s ease;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
+  color: #6d6d6d;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .category-chip.active {
-    color: #4E070C;
-    border-bottom-color: #4E070C;
-    font-weight: 700;
+  color: #4E070C;
+  border-bottom-color: #4E070C;
+  font-weight: 700;
 }
 
-/* ======= GRID TIPO PINTEREST ======= */
-.pinterest-grid {
+  /* ======= GRID TIPO PINTEREST ======= */
+  .pinterest-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    padding: px;
-}
+    gap: 12px;
+    padding: 16px 12px;
+  }
 
-/* CARD DE CADA PRODUCTO */
-.food-card {
-    border-radius: 18px;
+  .image-item {
+    border-radius: 12px;
     overflow: hidden;
-    --background: white;
-    cursor: pointer;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .image-item ion-img {
+    width: 100%;
+    display: block;
+  }
+
+ion-footer {
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
 }
 
-.food-card[data-height="small"] {
-    height: 180px;
+.bottom-navbar {
+  --background: #fff;
+  --min-height: 70px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.food-card[data-height="medium"] {
-    height: 240px;
+.nav-btn {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 12px;
 }
 
-.food-card[data-height="large"] {
-    height: 290px;
+.nav-btn ion-icon {
+  font-size: 26px;
+  color: #666;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.food-image {
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 45px;
+.nav-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  transition: color 0.2s ease;
 }
 
-.emoji-placeholder {
-    font-size: 40px;
+.nav-btn:active ion-icon {
+  transform: scale(0.9);
+  color: #4E070C;
 }
 
-.food-title {
-    font-weight: 700;
-    font-size: 16px;
+.nav-btn:active .nav-label {
+  color: #4E070C;
 }
 
-.food-content {
-    padding: 10px 14px;
+/* Badge de notificación */
+.nav-btn.has-badge {
+  position: relative;
 }
 
-.food-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-/* ======= TAB BAR CUSTOM ======= */
-.custom-tab-bar {
-    --background: white;
-    border-top: 1px solid #ddd;
-    padding: 4px 0;
-}
-
-.tab-selected {
-    color: #4E070C !important;
-
-    ion-icon {
-        transform: scale(1.15);
-        transition: 0.2s ease-in-out;
-    }
-}
-
-.tab-icon {
-    font-size: 24px;
-}
-
-.tab-label {
-    font-size: 13px;
+.notification-badge {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: #ff3b30;
+  border-radius: 50%;
+  border: 2px solid #fff;
 }
