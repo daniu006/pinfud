@@ -9,22 +9,40 @@ export const routes: Routes = [
   },
   {
     path: 'splash',
-    loadComponent: () => import('./splash/splash.page').then(m => m.SplashPage)
+    loadComponent: () => import('./presentation/splash/splash.page').then(m => m.SplashPage)
   },
   {
     path: 'welcome',
-    loadComponent: () => import('./auth/welcome/welcome.page').then( m => m.WelcomePage)
+    loadComponent: () => import('./presentation/welcome/welcome.page').then( m => m.WelcomePage)
   },
   {
     path: 'login',
-    loadComponent: () => import('./auth/login/login.page').then( m => m.LoginPage)
+    loadComponent: () => import('./presentation/auth/login/login.page').then( m => m.LoginPage)
   },
   {
     path: 'register',
-    loadComponent: () => import('./auth/register/register.page').then( m => m.RegisterPage)
+    loadComponent: () => import('./presentation/auth/register/register.page').then( m => m.RegisterPage)
   },
   {
     path: 'home',
-    loadComponent: () => import('./home/home.page').then( m => m.HomePage)
+    loadComponent: () => import('./presentation/home/home.page').then( m => m.HomePage)
+  },
+    
+  
+  {
+    path: 'dish',
+    loadComponent: () => import('./presentation/dish/dish.page').then( m => m.DishPage)
+  },
+  {
+    path: 'upload',
+    loadComponent: () => import('./presentation/upload/upload.page').then( m => m.UploadPage)
+  },
+  {
+    path: 'profile',
+    loadComponent: () => import('./presentation/profile/profile.page').then( m => m.ProfilePage)
+  },
+  {
+    path: 'search',
+    loadComponent: () => import('./presentation/search/search.page').then( m => m.SearchPage)
   },
 ];

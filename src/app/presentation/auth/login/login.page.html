@@ -3,22 +3,13 @@
   <div class="login-container">
 
     <img src="assets/img/logo.png" alt="Pinfud Logo" class="welcome-logo" />
-<h1 class="register-title">Iniciar Sesión</h1>
-    
-    <ion-input
-      label="Correo"
-      label-placement="floating"
-      fill="outline"
-    ></ion-input>
+    <h1 class="register-title">Iniciar Sesión</h1>
 
-    <ion-input
-      label="Contraseña"
-      label-placement="floating"
-      fill="outline"
-      type="password"
-    ></ion-input>
+    <ion-input label="Correo" label-placement="floating" fill="outline" type="email"></ion-input>
 
-    <button class="login-btn">Login</button>
+    <ion-input label="Contraseña" label-placement="floating" fill="outline" type="password"></ion-input>
+
+    <button class="login-btn" (click)="goToHome()">Login</button>
 
     <div class="social-login-container">
       <p class="social-title">Iniciar sesión con</p>

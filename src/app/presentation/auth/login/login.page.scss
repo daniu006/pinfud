@@ -16,8 +16,7 @@ ion-content::part(scroll) {
 
 /* Títulos */
 .register-title {
-
-   text-align: center;
+  text-align: center;
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 10px;
@@ -42,6 +41,7 @@ ion-input {
   flex-direction: column;
   gap: 18px;
   color: #8d8b8b;
+  --border-radius: 200px
 }
 
 .login-label {
@@ -112,10 +112,18 @@ ion-icon {
 
 .social-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Colores según marca */
-.google { color: #726f6f; }
-.facebook { color: #726f6f; }
-.x { color: #726f6f; }
+.google {
+  color: #726f6f;
+}
+
+.facebook {
+  color: #726f6f;
+}
+
+.x {
+  color: #726f6f;
+}

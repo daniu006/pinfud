@@ -4,7 +4,7 @@
 
 /* ======= HEADER OPTIMIZADO ======= */
 ion-header {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .top-toolbar {
@@ -102,28 +102,28 @@ ion-header {
   font-weight: 700;
 }
 
-  /* ======= GRID TIPO PINTEREST ======= */
-  .pinterest-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    padding: 16px 12px;
-  }
+/* ======= GRID TIPO PINTEREST ======= */
+.pinterest-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 16px 12px;
+}
 
-  .image-item {
-    border-radius: 12px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  }
+.image-item {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
 
-  .image-item ion-img {
-    width: 100%;
-    display: block;
-  }
+.image-item ion-img {
+  width: 100%;
+  display: block;
+}
 
 ion-footer {
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .bottom-navbar {
@@ -132,20 +132,33 @@ ion-footer {
   --padding-top: 8px;
   --padding-bottom: 8px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  flex-direction: row;
   align-items: center;
 }
 
-.nav-btn {
+.ion-no-border {
   display: flex !important;
   flex-direction: row !important;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 4px;
-  padding: 6px 12px;
+  padding: 6px 50px;
   cursor: pointer;
   transition: all 0.2s ease;
   border-radius: 12px;
+  background-color: #fff;
+}
+
+.ion-no-border-header {
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  background-color: #fff;
+}
+
+.ion-no-border {
+  display: flex;
+  flex-direction: row;
 }
 
 .nav-btn ion-icon {

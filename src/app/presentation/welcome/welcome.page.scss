@@ -17,11 +17,7 @@ ion-content::part(scroll) {
 
 .welcome-logo {
   width: 140px;
-  
-}
 
-.welcome-btn.primary {
-  opacity: 0.88;
 }
 
 .welcome-btn {
@@ -33,7 +29,6 @@ ion-content::part(scroll) {
   font-family: 'Montserrat';
   cursor: pointer;
   border: 2px solid #4E070C;
-
 }
 
 .welcome-btn:hover {
@@ -44,17 +39,12 @@ ion-content::part(scroll) {
 .primary {
   background: #4E070C;
   color: white;
-  
-  
+
+
 }
 
 .secondary {
   background: white;
   color: #4E070C;
-  
+
 }
-
-
-
-
-
