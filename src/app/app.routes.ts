@@ -27,8 +27,6 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./presentation/home/home.page').then( m => m.HomePage)
   },
-    
-  
   {
     path: 'dish',
     loadComponent: () => import('./presentation/dish/dish.page').then( m => m.DishPage)
@@ -44,5 +42,22 @@ export const routes: Routes = [
   {
     path: 'search',
     loadComponent: () => import('./presentation/search/search.page').then( m => m.SearchPage)
+  },
+
+  {
+    path: 'costa',
+    loadComponent: () => import('./presentation/regions/costa/costa.page').then( m => m.CostaPage)
+  },
+  {
+    path: 'sierra',
+    loadComponent: () => import('./presentation/regions/sierra/sierra.page').then( m => m.SierraPage)
+  },
+  {
+    path: 'oriente',
+    loadComponent: () => import('./presentation/regions/oriente/oriente.page').then( m => m.OrientePage)
+  },
+  {
+    path: 'galapagos',
+    loadComponent: () => import('./presentation/regions/galapagos/galapagos.page').then( m => m.GalapagosPage)
   },
 ];
