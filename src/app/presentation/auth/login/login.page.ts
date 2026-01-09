@@ -1,17 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonInput,
-  IonButton,
-  IonIcon
-} from '@ionic/angular/standalone';
+import { IonicModule, NavController } from '@ionic/angular';
+import { LoginViewModel } from './login.viewmodel';
 import { addIcons } from 'ionicons';
-import { NavController } from '@ionic/angular/standalone';
 import {
   logoGoogle,
   logoFacebook,
@@ -23,22 +15,27 @@ import {
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, IonInput, IonButton, IonIcon, IonHeader, IonToolbar, IonTitle]
+  imports: [CommonModule, FormsModule, IonicModule]
 })
-export class LoginPage {
+export class loginPage {
 
-  constructor(private navCtrl: NavController) {
-
-    addIcons({ logoGoogle, logoFacebook, logoTwitter });
+  constructor( public vm: LoginViewModel, private navCtrl: NavController ) {
+    addIcons({
+      logoGoogle,
+      logoFacebook,
+      logoTwitter
+    });
   }
-  goToHome() {
-    this.navCtrl.navigateForward('/home', { replaceUrl: true });
+
+  async onLogin() {
+    const success = await this.vm.login();
+    if (success) {
+      // Si el login es correcto, navegamos al Home
+      this.navCtrl.navigateRoot('/home');
+    }
   }
 
-  goBack() {
-    this.navCtrl.navigateBack('/welcome', { replaceUrl: true });
-
-
-
+  goToRegister() {
+    this.navCtrl.navigateForward('/register');
   }
 }

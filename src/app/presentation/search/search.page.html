@@ -1,13 +1,49 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>search</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="search-content" fullscreen>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">search</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Search Header -->
+  <div class="search-header">
+    <div class="search-input-wrapper">
+      <ion-icon name="search-outline"></ion-icon>
+      <input 
+        type="text" 
+        placeholder="Busca platos típicos"
+        [value]="vm.searchText()"
+        (input)="onSearchInput($event)"
+      />
+    </div>
+    <span class="cancel-btn" (click)="onCancel()">Cancelar</span>
+  </div>
+
+  <!-- Search Results / History List -->
+  <div class="search-list">
+    @for (item of vm.displayItems(); track item.id) {
+      <div class="search-item" (click)="onItemClick(item)">
+        <img [src]="item.image" [alt]="item.name" class="item-image" />
+        <div class="item-info">
+          <span class="item-name">{{ item.name }}</span>
+          <span class="item-region">{{ item.region }}</span>
+        </div>
+        @if (!vm.hasSearchText()) {
+          <ion-icon 
+            name="close-outline" 
+            class="remove-btn"
+            (click)="onRemoveItem($event, item.id)"
+          ></ion-icon>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Empty State -->
+  @if (vm.displayItems().length === 0) {
+    <div class="empty-state">
+      <ion-icon name="search-outline"></ion-icon>
+      @if (vm.hasSearchText()) {
+        <p>No se encontraron resultados</p>
+      } @else {
+        <p>No hay búsquedas recientes</p>
+      }
+    </div>
+  }
+
 </ion-content>

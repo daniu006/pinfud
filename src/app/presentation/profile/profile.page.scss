@@ -1,0 +1,255 @@
+:host {
+  --ion-background-color: #ffffff;
+}
+
+.profile-content {
+  --background: #ffffff;
+}
+
+// Profile Header
+.profile-header {
+  background: linear-gradient(135deg, #4E070C 0%, #7a1018 100%);
+  padding: 20px 16px 30px;
+  border-radius: 0 0 30px 30px;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.header-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.header-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.avatar-wrapper {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: #f0f0f0;
+}
+
+.user-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.user-email {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+// Saved Dishes Section
+.saved-section {
+  padding: 20px 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.section-count {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #4E070C;
+  padding: 4px 11px;
+  border-radius: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.dish-item {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.dish-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.empty-dishes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 48px;
+    color: #ddd;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 15px;
+    color: #999;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
+// Action Buttons
+.action-buttons {
+  padding: 10px 16px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 18px;
+  background: #f8f8f8;
+  border: 1px solid #e8e8e8;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Montserrat', sans-serif;
+
+  ion-icon {
+    font-size: 22px;
+    color: #4E070C;
+  }
+
+  span {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  &:active {
+    background: #f0f0f0;
+    transform: scale(0.98);
+  }
+
+
+  &.logout {
+    background: #fff5f5;
+    border-color: #ffdbdb;
+
+    ion-icon {
+      color: #c0392b;
+    }
+
+    span {
+      color: #c0392b;
+    }
+  }
+}
+
+// Navigation Footer
+ion-footer {
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.ion-no-border {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 6px 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  background-color: #fff;
+}
+
+.nav-btn ion-icon {
+  font-size: 26px;
+  color: #666;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.nav-btn:active ion-icon {
+  transform: scale(0.9);
+  color: #4E070C;
+}
+
+.nav-btn:active .nav-label {
+  color: #4E070C;
+}
+
+// Badge de notificación
+.nav-btn.has-badge {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: #ff3b30;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}

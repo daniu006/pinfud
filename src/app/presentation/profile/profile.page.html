@@ -1,13 +1,74 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="profile-content" fullscreen>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="header-top">
+      <span class="header-title">Pinfüd</span>
+    </div>
+
+    <div class="user-info">
+      <div class="avatar-wrapper">
+        <img [src]="vm.user().avatar" alt="Avatar" class="user-avatar" />
+      </div>
+      <h2 class="user-name">{{ vm.user().name }}</h2>
+      <p class="user-email">{{ vm.user().email }}</p>
+    </div>
+  </div>
+
+  <!-- Saved Dishes Section -->
+  <div class="saved-section">
+    <div class="section-header">
+      <span class="section-title">Platos Guardados</span>
+      <span class="section-count">{{ vm.savedCount() }}</span>
+    </div>
+
+    @if (vm.hasSavedDishes()) {
+    <div class="dishes-grid">
+      @for (dish of vm.savedDishes(); track dish.id) {
+      <div class="dish-item" (click)="onDishClick(dish)">
+        <img [src]="dish.image" [alt]="dish.name" class="dish-image" />
+      </div>
+      }
+    </div>
+    } @else {
+    <div class="empty-dishes">
+      <ion-icon name="bookmark-outline"></ion-icon>
+      <p>No tienes platos guardados</p>
+    </div>
+    }
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="action-buttons">
+    <button class="action-btn" (click)="onAddAccount()">
+      <ion-icon name="person-add-outline"></ion-icon>
+      <span>Agregar Cuenta</span>
+    </button>
+
+    <button class="action-btn" (click)="onInfo()">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <span>Información</span>
+    </button>
+
+    <button class="action-btn logout" (click)="onLogout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      <span>Cerrar Sesión</span>
+    </button>
+  </div>
+
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="nav-btn" (click)="setActiveTab('home')">
+    <ion-icon name="home-outline"></ion-icon>
+  </div>
+
+  <div class="nav-btn" (click)="setActiveTab('add')">
+    <ion-icon name="add-outline"></ion-icon>
+  </div>
+
+  <div class="nav-btn" [class.has-badge]="vm.hasNotifications()" (click)="setActiveTab('notifications')">
+    <ion-icon name="notifications-outline"></ion-icon>
+    <div class="notification-badge" *ngIf="vm.hasNotifications()"></div>
+  </div>
+</ion-footer>

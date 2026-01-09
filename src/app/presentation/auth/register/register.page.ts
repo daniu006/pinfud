@@ -19,6 +19,8 @@ export class RegisterPage {
     this.navCtrl.navigateBack('/welcome', {replaceUrl:true});
   }
 
+
+  
   goTohome(){
     this.navCtrl.navigateBack('/home', {replaceUrl:true});
   }

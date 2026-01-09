@@ -7,29 +7,30 @@
 
       <div class="top-right">
         <div class="profile-btn" (click)="openProfile()">
-          <ion-icon name="person-outline"></ion-icon>
+          <img src="assets/img/gato.jpeg" alt="Profile" class="profile-img">
         </div>
       </div>
     </div>
   </ion-toolbar>
 </ion-header>
+
 <ion-content class="main-content" [fullscreen]="true">
 
-
-
-  <!-- Categories Hero Scroll -->
   <div class="categories-hero">
     <div class="categories-scroll">
-      <div *ngFor="let category of categories" class="category-chip" [class.active]="selectedCategory === category.id"
-        (click)="selectCategory(category.id)">
+      <div *ngFor="let category of vm.categories" 
+           class="category-chip" 
+           [class.active]="vm.selectedCategory === category.id"
+           (click)="selectCategory(category.id)">
         <span class="category-name">{{ category.name }}</span>
       </div>
     </div>
   </div>
 
-  <!-- Pinterest-Style Masonry Grid -->
   <div class="pinterest-grid">
-    <div *ngFor="let item of foodImages" class="image-item" (click)="openItem(item)">
+    <div *ngFor="let item of vm.filteredImages" 
+         class="image-item" 
+         (click)="openItem(item)">
       <ion-img [src]="item.src"></ion-img>
     </div>
   </div>
@@ -39,17 +40,16 @@
 <ion-footer class="ion-no-border">
   <div class="nav-btn" (click)="setActiveTab('home')">
     <ion-icon name="home-outline"></ion-icon>
-    <span class="nav-label"></span>
   </div>
 
   <div class="nav-btn" (click)="setActiveTab('add')">
     <ion-icon name="add-outline"></ion-icon>
-    <span class="nav-label"></span>
   </div>
 
-  <div class="nav-btn" [class.has-badge]="hasNotifications" (click)="setActiveTab('notifications')">
+  <div class="nav-btn" 
+       [class.has-badge]="vm.hasNotifications" 
+       (click)="setActiveTab('notifications')">
     <ion-icon name="notifications-outline"></ion-icon>
-    <span class="nav-label"></span>
-    <div class="notification-badge" *ngIf="hasNotifications"></div>
+    <div class="notification-badge" *ngIf="vm.hasNotifications"></div>
   </div>
 </ion-footer>
