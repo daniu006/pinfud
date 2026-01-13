@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,13 @@ export class LoginViewModel {
   // Estados de la interfaz
   isLoading: boolean = false;
   errorMessage: string = '';
+  showPassword: boolean = false;
 
-  constructor() {}
+  constructor(private authService: AuthService) { }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   // Método para validar campos
   isFormValid(): boolean {
@@ -29,7 +35,7 @@ export class LoginViewModel {
     return true;
   }
 
-  // Método para ejecutar login (simulado)
+  // Método para ejecutar login
   async login() {
     if (!this.isFormValid()) return false;
 
@@ -37,14 +43,42 @@ export class LoginViewModel {
     this.errorMessage = '';
 
     try {
-      // Simulamos una espera de red de 1 segundo
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await this.authService.login(this.email, this.password);
       return true;
-    } catch (error) {
-      this.errorMessage = 'Error al iniciar sesión. Inténtalo de nuevo.';
+    } catch (error: any) {
+      console.error(error);
+      this.errorMessage = this.handleError(error);
       return false;
     } finally {
       this.isLoading = false;
+    }
+  }
+
+  async loginWithGoogle() {
+    this.isLoading = true;
+    this.errorMessage = '';
+    try {
+      await this.authService.loginWithGoogle();
+      return true;
+    } catch (error: any) {
+      console.error(error);
+      this.errorMessage = 'Google Login failed: ' + error.message;
+      return false;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  private handleError(error: any): string {
+    switch (error.code) {
+      case 'auth/invalid-credential':
+        return 'Credenciales incorrectas.';
+      case 'auth/user-not-found':
+        return 'Usuario no encontrado.';
+      case 'auth/wrong-password':
+        return 'Contraseña incorrecta.';
+      default:
+        return 'Error al iniciar sesión: ' + (error.message || 'Desconocido');
     }
   }
 }

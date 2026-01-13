@@ -1,36 +1,51 @@
 <ion-content class="login-content" fullscreen>
+  <div class="auth-wrapper">
+    <div class="login-container">
 
-  <div class="login-container">
+      <img src="assets/img/logo.png" alt="Pinfud Logo" class="welcome-logo" />
+      <h1 class="register-title">Iniciar Sesión</h1>
 
-    <img src="assets/img/logo.png" alt="Pinfud Logo" class="welcome-logo" />
-    <h1 class="register-title">Iniciar Sesión</h1>
+      <ion-input label="Correo" label-placement="floating" fill="outline" type="email"
+        [(ngModel)]="vm.email"></ion-input>
 
-    <ion-input label="Correo" label-placement="floating" fill="outline" type="email"></ion-input>
+      <ion-input label="Contraseña" label-placement="floating" fill="outline"
+        [type]="vm.showPassword ? 'text' : 'password'" [(ngModel)]="vm.password">
+        <ion-icon slot="end" [name]="vm.showPassword ? 'eye-off-outline' : 'eye-outline'" (click)="vm.togglePassword()"
+          class="password-icon"></ion-icon>
+      </ion-input>
 
-    <ion-input label="Contraseña" label-placement="floating" fill="outline" type="password"></ion-input>
-
-    <button class="login-btn" (click)="onLogin( )">Login</button>
-
-    <div class="social-login-container">
-      <p class="social-title">Iniciar sesión con</p>
-
-      <div class="social-buttons">
-
-        <ion-button class="social-btn google" shape="round" fill="clear">
-          <ion-icon name="logo-google"></ion-icon>
-        </ion-button>
-
-        <ion-button class="social-btn facebook" shape="round" fill="clear">
-          <ion-icon name="logo-facebook"></ion-icon>
-        </ion-button>
-
-        <ion-button class="social-btn x" shape="round" fill="clear">
-          <ion-icon name="logo-twitter"></ion-icon>
-        </ion-button>
-
+      <div class="error-message" *ngIf="vm.errorMessage">
+        {{ vm.errorMessage }}
       </div>
+
+      <button class="login-btn" (click)="onLogin()" [disabled]="vm.isLoading">
+        {{ vm.isLoading ? 'Cargando...' : 'Login' }}
+      </button>
+
+      <div class="social-login-container">
+        <p class="social-title">Iniciar sesión con</p>
+
+        <div class="social-buttons">
+
+          <ion-button class="social-btn google" shape="round" fill="clear" (click)="onLoginGoogle()">
+            <ion-icon name="logo-google"></ion-icon>
+          </ion-button>
+
+          <ion-button class="social-btn facebook" shape="round" fill="clear">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </ion-button>
+
+          <ion-button class="social-btn x" shape="round" fill="clear">
+            <ion-icon name="logo-twitter"></ion-icon>
+          </ion-button>
+
+        </div>
+      </div>
+
+      <ion-button fill="clear" (click)="goToRegister()" class="register-link">
+        ¿No tienes cuenta? Regístrate
+      </ion-button>
+
     </div>
-
   </div>
-
 </ion-content>

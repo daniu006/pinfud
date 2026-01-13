@@ -1,36 +1,38 @@
 <ion-content class="register-content" fullscreen>
+  <div class="auth-wrapper">
+    <div class="register-container">
 
-  <div class="register-container">
+      <img src="assets/img/logo.png" alt="Pinfud Logo" class="welcome-logo" />
+      <h1 class="register-title">Registrarse</h1>
 
-    <img src="assets/img/logo.png" alt="Pinfud Logo" class="welcome-logo" />  
-    <h1 class="register-title">Registrarse</h1>
-    
-    <ion-input 
-    label="Nombre" 
-    label-placement="floating" 
-    fill="outline" 
-    ></ion-input>
+      <ion-input label="Nombre" label-placement="floating" fill="outline"></ion-input>
 
-   <ion-input
-    label="Correo" 
-    label-placement="floating" 
-    fill="outline" 
-    ></ion-input>
+      <ion-input label="Correo" label-placement="floating" fill="outline" [(ngModel)]="vm.email"></ion-input>
 
-    <ion-input
-    label="Contraseña" 
-    label-placement="floating" 
-    fill="outline" 
-    ></ion-input>
+      <ion-input label="Contraseña" label-placement="floating" fill="outline"
+        [type]="vm.showPassword ? 'text' : 'password'" [(ngModel)]="vm.password">
+        <ion-icon slot="end" [name]="vm.showPassword ? 'eye-off-outline' : 'eye-outline'" (click)="vm.togglePassword()"
+          class="password-icon"></ion-icon>
+      </ion-input>
 
-    <ion-input
-    label="Confirmar contraseña" 
-    label-placement="floating" 
-    fill="outline" 
-    ></ion-input>
+      <ion-input label="Confirmar contraseña" label-placement="floating" fill="outline"
+        [type]="vm.showConfirmPassword ? 'text' : 'password'" [(ngModel)]="vm.confirmPassword">
+        <ion-icon slot="end" [name]="vm.showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"
+          (click)="vm.toggleConfirmPassword()" class="password-icon"></ion-icon>
+      </ion-input>
 
-    <button class="register-btn" (click)="goTohome()">Registrar</button>
+      <div class="error-message" *ngIf="vm.errorMessage">
+        {{ vm.errorMessage }}
+      </div>
 
+      <button class="register-btn" (click)="onRegister()" [disabled]="vm.isLoading">
+        {{ vm.isLoading ? 'Cargando...' : 'Registrar' }}
+      </button>
+
+      <ion-button fill="clear" (click)="goTologin()" class="login-link">
+        ¿Ya tienes cuenta? Inicia sesión
+      </ion-button>
+
+    </div>
   </div>
-
 </ion-content>
