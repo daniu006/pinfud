@@ -12,7 +12,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 })
 export class DishPage implements OnInit {
 
-  constructor() { }
+  constructor() {  }
 
   ngOnInit() {
   }

@@ -1,8 +1,9 @@
 <ion-header class="ion-no-border-header">
   <ion-toolbar class="top-toolbar">
     <div class="header-container">
-      <div class="top-left">
-        <ion-icon name="search-outline" (click)="openSearch()"></ion-icon>
+      <div class="search-bar-wrapper" (click)="openSearch()">
+        <ion-icon name="search-outline"></ion-icon>
+        <span class="search-placeholder">Busca platos</span>
       </div>
 
       <div class="top-right">
@@ -18,20 +19,16 @@
 
   <div class="categories-hero">
     <div class="categories-scroll">
-      <div *ngFor="let category of vm.categories" 
-           class="category-chip" 
-           [class.active]="vm.selectedCategory === category.id"
-           (click)="selectCategory(category.id)">
+      <div *ngFor="let category of vm.categories" class="category-chip"
+        [class.active]="vm.selectedCategory === category.id" (click)="selectCategory(category.id)">
         <span class="category-name">{{ category.name }}</span>
       </div>
     </div>
   </div>
 
   <div class="pinterest-grid">
-    <div *ngFor="let item of vm.filteredImages" 
-         class="image-item" 
-         (click)="openItem(item)">
-      <ion-img [src]="item.src"></ion-img>
+    <div *ngFor="let item of vm.filteredImages" class="image-item" (click)="openItem(item)">
+      <img [src]="item.src"/>
     </div>
   </div>
 
@@ -46,9 +43,7 @@
     <ion-icon name="add-outline"></ion-icon>
   </div>
 
-  <div class="nav-btn" 
-       [class.has-badge]="vm.hasNotifications" 
-       (click)="setActiveTab('notifications')">
+  <div class="nav-btn" [class.has-badge]="vm.hasNotifications" (click)="setActiveTab('notifications')">
     <ion-icon name="notifications-outline"></ion-icon>
     <div class="notification-badge" *ngIf="vm.hasNotifications"></div>
   </div>

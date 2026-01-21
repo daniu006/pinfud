@@ -5,7 +5,7 @@ ion-content::part(scroll) {
 
 }
 
-.register-content{
+.register-content {
   --background: #ffffff;
 }
 
@@ -23,6 +23,7 @@ ion-content::part(scroll) {
   color: #4E070C;
   font-family: 'Montserrat';
 }
+
 /* Contenedor principal */
 .register-container {
   width: 85%;
@@ -32,6 +33,44 @@ ion-content::part(scroll) {
   gap: 18px;
   color: #8d8b8b;
 
+}
+
+/* Input wrapper */
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.input-wrapper label {
+  color: #555555;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  margin-left: 4px;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: 'Montserrat', sans-serif;
+  color: #333333;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #4E070C;
+  box-shadow: 0 0 0 3px rgba(78, 7, 12, 0.1);
+}
+
+.input-wrapper input::placeholder {
+  color: #999999;
 }
 
 

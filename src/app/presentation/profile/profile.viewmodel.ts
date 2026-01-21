@@ -35,12 +35,12 @@ export class ProfileViewModel {
 
   // Platos guardados por el usuario (mock data)
   savedDishes = signal<SavedDish[]>([
-    { id: 1, name: 'Encebollado', image: 'assets/img/encebollado-1.jpg', region: 'Costa' },
-    { id: 2, name: 'Cuy Asado', image: 'assets/img/Cuy Asado.jpg', region: 'Sierra' },
-    { id: 3, name: 'Ceviche', image: 'assets/img/ceviche-1.jpg', region: 'Costa' },
+    { id: 1, name: 'Encebollado', image: 'assets/img/encebollado.jpg', region: 'Costa' },
+    { id: 2, name: 'Cuy Asado', image: 'assets/img/cuyAsado.jpg', region: 'Sierra' },
+    { id: 3, name: 'Ceviche', image: 'assets/img/ceviche.jpg', region: 'Costa' },
     { id: 4, name: 'Fritada', image: 'assets/img/fritada.jpg', region: 'Sierra' },
-    { id: 5, name: 'Bolón de Verde', image: 'assets/img/bolones-1.jpg', region: 'Costa' },
-    { id: 6, name: 'Colada Morada', image: 'assets/img/Colada Morada y Guagua de Pan.jpg', region: 'Sierra' },
+    { id: 5, name: 'Bolón de Verde', image: 'assets/img/bolones.jpg', region: 'Costa' },
+    { id: 6, name: 'Colada Morada', image: 'assets/img/coladaMorada.jpg', region: 'Sierra' },
   ]);
 
   // Computed: cantidad de platos guardados

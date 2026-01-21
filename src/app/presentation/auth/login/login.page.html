@@ -5,9 +5,15 @@
     <img src="assets/img/logo.png" alt="Pinfud Logo" class="welcome-logo" />
     <h1 class="register-title">Iniciar Sesión</h1>
 
-    <ion-input label="Correo" label-placement="floating" fill="outline" type="email"></ion-input>
+    <div class="input-wrapper">
+      <label for="email">Correo</label>
+      <input id="email" type="email" [(ngModel)]="vm.email" placeholder="Ingresa tu correo" />
+    </div>
 
-    <ion-input label="Contraseña" label-placement="floating" fill="outline" type="password"></ion-input>
+    <div class="input-wrapper">
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" [(ngModel)]="vm.password" placeholder="Ingresa tu contraseña" />
+    </div>
 
     <button class="login-btn" (click)="onLogin( )">Login</button>
 
