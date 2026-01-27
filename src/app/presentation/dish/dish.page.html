@@ -1,13 +1,49 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>dish</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="dish-content" fullscreen>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">dish</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Back Button -->
+  <div class="back-button" (click)="goBack('/home')">
+    <ion-icon name="arrow-back"></ion-icon>
+  </div>
+
+  <!-- Main Dish Image -->
+  @if (vm.currentDish()) {
+  <div class="dish-image-container">
+    <!-- Background blurred image -->
+    <div class="dish-image-background" [style.background-image]="'url(' + vm.currentDish()!.image + ')'"></div>
+    <!-- Main image -->
+    <img [src]="vm.currentDish()!.image" [alt]="vm.currentDish()!.name" class="dish-image" />
+  </div>
+
+  <!-- Dish Info Overlay -->
+  <div class="dish-info-overlay">
+    <h1 class="dish-name">{{ vm.currentDish()!.name }}</h1>
+    <p class="dish-region">{{ vm.currentDish()!.region }}</p>
+  </div>
+
+  <!-- Action Bar -->
+  <div class="action-bar">
+
+    <!-- Like Button -->
+    <div class="action-btn" (click)="onLike()">
+      <ion-icon [name]="vm.isLiked() ? 'heart' : 'heart-outline'" [class.liked]="vm.isLiked()"></ion-icon>
+    </div>
+
+    <!-- Share Button -->
+    <div class="action-btn" (click)="onShare()">
+      <ion-icon name="share-outline"></ion-icon>
+    </div>
+
+    <!-- Download Button -->
+    <div class="action-btn" (click)="onDownload()">
+      <ion-icon name="download-outline"></ion-icon>
+    </div>
+
+    <!-- Save Button -->
+    <button class="save-btn" (click)="onSave()">
+      {{ vm.isSaved() ? 'Guardado' : 'Guardar' }}
+    </button>
+
+  </div>
+  }
+
 </ion-content>

@@ -1,0 +1,61 @@
+<ion-content class="notifications-content" fullscreen>
+
+    <!-- Header -->
+    <div class="notifications-header">
+        <div class="back-button" (click)="goBack()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </div>
+        <h1 class="notifications-title">Notificaciones</h1>
+        @if (vm.hasUnread()) {
+        <button class="mark-all-btn" (click)="markAllAsRead()">
+            <ion-icon name="checkmark-done"></ion-icon>
+        </button>
+        }
+    </div>
+
+    <div class="notifications-container">
+
+        <!-- Lista de notificaciones -->
+        @if (vm.notifications().length > 0) {
+        <div class="notifications-list">
+            @for (notification of vm.notifications(); track notification.id) {
+            <div class="notification-card" [class.unread]="!notification.isRead"
+                (click)="onNotificationClick(notification.id)">
+
+                <!-- Icono de notificación -->
+                <div class="notification-icon" [style.background-color]="vm.getNotificationColor(notification.type)">
+                    <ion-icon [name]="notification.icon"></ion-icon>
+                </div>
+
+                <!-- Contenido -->
+                <div class="notification-content">
+                    <h3 class="notification-title">{{ notification.title }}</h3>
+                    <p class="notification-message">{{ notification.message }}</p>
+                    <span class="notification-time">{{ vm.getRelativeTime(notification.timestamp) }}</span>
+                </div>
+
+                <!-- Botón eliminar -->
+                <button class="delete-btn" (click)="deleteNotification($event, notification.id)">
+                    <ion-icon name="trash-outline"></ion-icon>
+                </button>
+
+                <!-- Indicador de no leída -->
+                @if (!notification.isRead) {
+                <div class="unread-indicator"></div>
+                }
+
+            </div>
+            }
+        </div>
+        } @else {
+        <!-- Estado vacío -->
+        <div class="empty-state">
+            <ion-icon name="notifications" class="empty-icon"></ion-icon>
+            <h2>No hay notificaciones</h2>
+            <p>Te avisaremos cuando haya algo nuevo</p>
+        </div>
+        }
+
+    </div>
+
+</ion-content>

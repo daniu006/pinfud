@@ -38,13 +38,62 @@ export class HomePage {
 
   setActiveTab(tab: string) {
     if (tab === 'notifications') {
-      this.vm.markNotificationsAsRead();
+      this.openNotifications();
+    } else if (tab === 'add') {
+      this.openAddImage();
     }
   }
 
+  openAddImage() {
+    this.nav.navigateForward('/upload');
+  }
+
+  openNotifications() {
+    this.vm.markNotificationsAsRead();
+    this.nav.navigateForward('/notifications');
+  }
+
   openItem(item: any) {
-    this.selectedItem = item;
-    this.imageModalOpen = true;
+    // Navegar a la página de detalle del plato
+    this.nav.navigateForward('/dish', {
+      state: {
+        dish: {
+          id: item.id,
+          name: this.getDishName(item.id),
+          image: item.src,
+          region: this.getRegionName(item.categoryId)
+        }
+      }
+    });
+  }
+
+  // Obtener nombre del plato según ID
+  private getDishName(id: number): string {
+    const names: { [key: number]: string } = {
+      1: 'Bollo de Pescado',
+      2: 'Fritada',
+      3: 'Bolón de Verde',
+      4: 'Caldo de Salchicha',
+      5: 'Encebollado',
+      6: 'Ceviche',
+      7: 'Cuy Asado',
+      8: 'Chicha de Jora',
+      9: 'Corviche',
+      10: 'Colada Morada'
+    };
+    return names[id] || 'Plato Ecuatoriano';
+  }
+
+  // Obtener nombre de región según ID
+  private getRegionName(categoryId: number): string {
+    const regions: { [key: number]: string } = {
+      1: 'Ecuador',
+      2: 'Costa',
+      3: 'Sierra',
+      4: 'Oriente',
+      5: 'Galápagos'
+    };
+    return regions[categoryId] || 'Ecuador';
   }
 
   // ESTAS SON LAS FUNCIONES QUE FALTABAN:

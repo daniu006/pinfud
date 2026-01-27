@@ -1,0 +1,186 @@
+:host {
+    --ion-background-color: #ffffff;
+}
+
+.dish-content {
+    --background: #ffffff;
+    position: relative;
+    padding: 16px;
+    padding-bottom: 0;
+}
+
+// Back Button
+.back-button {
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    z-index: 100;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+
+    ion-icon {
+        font-size: 24px;
+        color: #4E070C;
+    }
+
+    &:active {
+        transform: scale(0.95);
+        background: rgba(255, 255, 255, 1);
+    }
+}
+
+// Main Dish Image
+.dish-image-container {
+    width: 100%;
+    height: calc(100vh - 85px);
+    position: relative;
+    overflow: hidden;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Background blurred image
+.dish-image-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(18px);
+    transform: scale(1.1);
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.dish-image {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 16px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+// Dish Info Overlay
+.dish-info-overlay {
+    position: absolute;
+    bottom: 82px;
+    left: 0;
+    right: 0;
+    padding: 15px 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    z-index: 50;
+}
+
+.dish-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 6px 0;
+    font-family: 'Montserrat', sans-serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dish-region {
+    font-size: 16px;
+    color: #f0f0f0;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+// Action Bar
+.action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px 20px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 12px;
+    border-top: 1px solid #f0f0f0;
+    z-index: 100;
+}
+
+.action-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #F8EFE7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    ion-icon {
+        font-size: 26px;
+        color: #4E070C;
+        transition: all 0.2s ease;
+    }
+
+    &:active {
+        transform: scale(0.9);
+        background: #ede1d5;
+    }
+
+    // Like button cuando está activo
+    ion-icon.liked {
+        color: #ff4757;
+        animation: heartBeat 0.3s ease;
+    }
+}
+
+@keyframes heartBeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+// Save Button
+.save-btn {
+    flex: 1;
+    max-width: 140px;
+    padding: 14px 24px;
+    background: #4E070C;
+    color: #ffffff;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(78, 7, 12, 0.3);
+
+    &:active {
+        transform: scale(0.95);
+        background: #3a0509;
+    }
+}

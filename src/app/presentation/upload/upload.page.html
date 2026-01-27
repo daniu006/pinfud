@@ -1,13 +1,90 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>upload</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="upload-content" fullscreen>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">upload</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Header con botón de volver -->
+  <div class="upload-header">
+    <div class="back-button" (click)="goBack()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </div>
+    <h1 class="upload-title">Subir Plato</h1>
+  </div>
+
+  <div class="upload-container">
+
+    <!-- Sección de selección de imagen -->
+    @if (!vm.selectedImage()) {
+    <div class="image-selector">
+      <div class="selector-content">
+        <ion-icon name="images-outline" class="selector-icon"></ion-icon>
+        <h2>Agrega una foto de tu plato</h2>
+        <p>Comparte la gastronomía ecuatoriana</p>
+      </div>
+
+      <div class="action-buttons">
+        <button class="action-btn camera-btn" (click)="takePhoto()">
+          <ion-icon name="camera-outline"></ion-icon>
+          <span>Tomar Foto</span>
+        </button>
+
+        <button class="action-btn gallery-btn" (click)="selectFromGallery()">
+          <ion-icon name="images-outline"></ion-icon>
+          <span>Seleccionar de Galería</span>
+        </button>
+      </div>
+    </div>
+    }
+
+    <!-- Preview de imagen seleccionada -->
+    @if (vm.selectedImage()) {
+    <div class="image-preview-section">
+      <div class="image-preview">
+        <img [src]="vm.selectedImage()" alt="Preview" />
+        <button class="remove-image-btn" (click)="removeImage()">
+          <ion-icon name="close-circle"></ion-icon>
+        </button>
+      </div>
+
+      <!-- Formulario de detalles -->
+      <div class="dish-form">
+
+        <div class="form-group">
+          <label>Nombre del Plato</label>
+          <ion-input type="text" placeholder="Ej: Encebollado" [value]="vm.dishName()"
+            (ionInput)="updateDishName($event)" class="custom-input"></ion-input>
+        </div>
+
+        <div class="form-group">
+          <label>Región</label>
+          <ion-select placeholder="Selecciona la región" [value]="vm.selectedRegion()"
+            (ionChange)="updateRegion($event)" class="custom-select">
+            @for (region of vm.regions; track region.id) {
+            <ion-select-option [value]="region.id">
+              {{ region.name }}
+            </ion-select-option>
+            }
+          </ion-select>
+        </div>
+
+        <div class="form-group">
+          <label>Descripción</label>
+          <ion-textarea placeholder="Cuéntanos sobre este plato..." [value]="vm.description()"
+            (ionInput)="updateDescription($event)" rows="4" class="custom-textarea"></ion-textarea>
+        </div>
+
+        <!-- Botón de enviar -->
+        <button class="submit-btn" [class.disabled]="!vm.isFormValid()"
+          [disabled]="!vm.isFormValid() || vm.isUploading()" (click)="submitDish()">
+          @if (vm.isUploading()) {
+          <span>Subiendo...</span>
+          } @else {
+          <ion-icon name="checkmark-circle"></ion-icon>
+          <span>Publicar Plato</span>
+          }
+        </button>
+
+      </div>
+    </div>
+    }
+
+  </div>
+
 </ion-content>
