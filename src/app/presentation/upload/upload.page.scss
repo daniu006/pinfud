@@ -152,12 +152,18 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: #e0e0e0;
+    min-height: 200px;
+    border: 2px solid var(--pinfud-primary);
 
     img {
         width: 100%;
-        display: block;
+        height: auto;
+        min-height: 200px;
         max-height: 400px;
+        display: block;
         object-fit: cover;
+        background: #f0f0f0;
     }
 }
 
@@ -184,6 +190,76 @@
 
     &:active {
         transform: scale(0.9);
+    }
+}
+
+/* ======= COMPACT PREVIEW ======= */
+.compact-preview {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: #f8f8f8;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    border: 2px solid var(--pinfud-primary);
+}
+
+.preview-thumbnail {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background: #333;
+    border: 3px solid var(--pinfud-primary);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.preview-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.preview-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.change-image-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #666;
+    cursor: pointer;
+    width: fit-content;
+    transition: all 0.2s ease;
+    font-family: 'Montserrat', sans-serif;
+
+    ion-icon {
+        font-size: 18px;
+        color: #ff3b30;
+    }
+
+    &:active {
+        background: #f0f0f0;
+        transform: scale(0.97);
     }
 }
 
@@ -217,17 +293,30 @@
     --padding-end: 16px;
     --padding-top: 14px;
     --padding-bottom: 14px;
-    --color: #333;
-    --placeholder-color: #999;
+    --color: #000;
+    --placeholder-color: #666;
     --placeholder-opacity: 1;
     font-size: 15px;
     font-family: 'Montserrat', sans-serif;
     border: 2px solid transparent;
     transition: all 0.2s ease;
+    color: #000;
 
     &:focus {
         --background: #fff;
         border-color: var(--pinfud-primary);
+    }
+}
+
+.custom-select {
+    color: #000 !important;
+
+    &::part(text) {
+        color: #000 !important;
+    }
+
+    &::part(icon) {
+        color: #333;
     }
 }
 

@@ -5,6 +5,25 @@
     <img src="assets/img/logo.png" alt="Pinfud Logo" class="welcome-logo" />
     <h1 class="register-title">Registrarse</h1>
 
+    <!-- Mensaje de éxito después del registro -->
+    @if (vm.registrationComplete) {
+    <div class="success-message">
+      <ion-icon name="checkmark-circle"></ion-icon>
+      {{ vm.successMessage }}
+    </div>
+    <button class="login-btn" (click)="goToLogin()">Ir a Iniciar Sesión</button>
+    <p class="login-link" style="margin-top: 16px;">
+      <a (click)="vm.clearForm()">Registrar otra cuenta</a>
+    </p>
+    } @else {
+    <!-- Mensaje de error -->
+    @if (vm.errorMessage) {
+    <div class="error-message">
+      <ion-icon name="alert-circle"></ion-icon>
+      {{ vm.errorMessage }}
+    </div>
+    }
+
     <div class="input-wrapper">
       <label for="name">Nombre</label>
       <input id="name" type="text" [(ngModel)]="vm.name" placeholder="Ingresa tu nombre" />
@@ -26,7 +45,19 @@
         placeholder="Confirma tu contraseña" />
     </div>
 
-    <button class="register-btn" (click)="goTohome()">Registrar</button>
+    <button class="register-btn" (click)="onRegister()" [disabled]="vm.isLoading">
+      @if (vm.isLoading) {
+      <ion-spinner name="crescent"></ion-spinner>
+      Registrando...
+      } @else {
+      Registrar
+      }
+    </button>
+
+    <p class="login-link">
+      ¿Ya tienes cuenta? <a (click)="goToLogin()">Inicia sesión</a>
+    </p>
+    }
 
   </div>
 

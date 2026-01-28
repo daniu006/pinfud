@@ -5,6 +5,22 @@
     <img src="assets/img/logo.png" alt="Pinfud Logo" class="welcome-logo" />
     <h1 class="register-title">Iniciar Sesión</h1>
 
+    <!-- Mensaje de éxito -->
+    @if (vm.successMessage) {
+    <div class="success-message">
+      <ion-icon name="checkmark-circle"></ion-icon>
+      {{ vm.successMessage }}
+    </div>
+    }
+
+    <!-- Mensaje de error -->
+    @if (vm.errorMessage) {
+    <div class="error-message">
+      <ion-icon name="alert-circle"></ion-icon>
+      {{ vm.errorMessage }}
+    </div>
+    }
+
     <div class="input-wrapper">
       <label for="email">Correo</label>
       <input id="email" type="email" [(ngModel)]="vm.email" placeholder="Ingresa tu correo" />
@@ -15,22 +31,36 @@
       <input id="password" type="password" [(ngModel)]="vm.password" placeholder="Ingresa tu contraseña" />
     </div>
 
-    <button class="login-btn" (click)="onLogin( )">Login</button>
+    <button class="login-btn" (click)="onLogin()" [disabled]="vm.isLoading">
+      @if (vm.isLoading) {
+      <ion-spinner name="crescent"></ion-spinner>
+      Iniciando...
+      } @else {
+      Login
+      }
+    </button>
+
+    <p class="register-link">
+      ¿No tienes cuenta? <a (click)="goToRegister()">Regístrate</a>
+    </p>
 
     <div class="social-login-container">
       <p class="social-title">Iniciar sesión con</p>
 
       <div class="social-buttons">
 
-        <ion-button class="social-btn google" shape="round" fill="clear">
+        <ion-button class="social-btn google" shape="round" fill="clear" (click)="onGoogleLogin()"
+          [disabled]="vm.isLoading">
           <ion-icon name="logo-google"></ion-icon>
         </ion-button>
 
-        <ion-button class="social-btn facebook" shape="round" fill="clear">
+        <ion-button class="social-btn facebook" shape="round" fill="clear" (click)="onFacebookLogin()"
+          [disabled]="vm.isLoading">
           <ion-icon name="logo-facebook"></ion-icon>
         </ion-button>
 
-        <ion-button class="social-btn x" shape="round" fill="clear">
+        <ion-button class="social-btn x" shape="round" fill="clear" (click)="onTwitterLogin()"
+          [disabled]="vm.isLoading">
           <ion-icon name="logo-twitter"></ion-icon>
         </ion-button>
 

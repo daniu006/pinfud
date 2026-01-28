@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NavController } from '@ionic/angular/standalone';
 import { IonicModule } from '@ionic/angular';
-import { RegisterViewModel } from './register.viewmodel'; // Importamos el VM
+import { RegisterViewModel } from './register.viewmodel';
+import { addIcons } from 'ionicons';
+import { checkmarkCircle, alertCircle, mail } from 'ionicons/icons';
 
 @Component({
   selector: 'app-register',
@@ -15,19 +17,20 @@ import { RegisterViewModel } from './register.viewmodel'; // Importamos el VM
 export class RegisterPage {
 
   constructor(
-    public vm: RegisterViewModel, // Inyectamos el VM
+    public vm: RegisterViewModel,
     private navCtrl: NavController
-  ) { }
-   
-  goTologin() {
-    this.navCtrl.navigateBack('/welcome', { replaceUrl: true });
+  ) {
+    addIcons({ checkmarkCircle, alertCircle, mail });
   }
 
-  // Adaptación del método original usando el VM
-  async goTohome() {
+  goToLogin() {
+    this.navCtrl.navigateBack('/login', { replaceUrl: true });
+  }
+
+  // Método para ejecutar registro con Firebase
+  async onRegister() {
     const success = await this.vm.executeRegister();
-    if (success) {
-      this.navCtrl.navigateRoot('/home', { replaceUrl: true });
-    }
+    // No navegamos al home automáticamente, mostramos mensaje de verificación
+    // El usuario debe verificar su email primero
   }
 }

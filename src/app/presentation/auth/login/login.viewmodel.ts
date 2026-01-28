@@ -1,18 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginViewModel {
+  private authService = inject(AuthService);
+
   // Estado del formulario
-  email: string = 'daniu@gmail.com';
-  password: string = '123456';
+  email: string = '';
+  password: string = '';
 
   // Estados de la interfaz
   isLoading: boolean = false;
   errorMessage: string = '';
+  successMessage: string = '';
+  needsVerification: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
   // Método para validar campos
   isFormValid(): boolean {
@@ -29,17 +34,26 @@ export class LoginViewModel {
     return true;
   }
 
-  // Método para ejecutar login (simulado)
-  async login() {
+  // Método para ejecutar login con Firebase
+  async login(): Promise<boolean> {
     if (!this.isFormValid()) return false;
 
     this.isLoading = true;
     this.errorMessage = '';
+    this.successMessage = '';
+    this.needsVerification = false;
 
     try {
-      // Simulamos una espera de red de 1 segundo
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      return true;
+      const result = await this.authService.login(this.email, this.password);
+
+      if (result.success) {
+        this.successMessage = result.message;
+        return true;
+      } else {
+        this.errorMessage = result.message;
+        this.needsVerification = result.needsVerification ?? false;
+        return false;
+      }
     } catch (error) {
       this.errorMessage = 'Error al iniciar sesión. Inténtalo de nuevo.';
       return false;
@@ -47,4 +61,79 @@ export class LoginViewModel {
       this.isLoading = false;
     }
   }
+
+  // Login con Google
+  async loginWithGoogle(): Promise<boolean> {
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    try {
+      const result = await this.authService.signInWithGoogle();
+      if (result.success) {
+        this.successMessage = result.message;
+        return true;
+      } else {
+        this.errorMessage = result.message;
+        return false;
+      }
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  // Login con Facebook
+  async loginWithFacebook(): Promise<boolean> {
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    try {
+      const result = await this.authService.signInWithFacebook();
+      if (result.success) {
+        this.successMessage = result.message;
+        return true;
+      } else {
+        this.errorMessage = result.message;
+        return false;
+      }
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  // Login con Twitter
+  async loginWithTwitter(): Promise<boolean> {
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    try {
+      const result = await this.authService.signInWithTwitter();
+      if (result.success) {
+        this.successMessage = result.message;
+        return true;
+      } else {
+        this.errorMessage = result.message;
+        return false;
+      }
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  // Método para cerrar sesión
+  async logout(): Promise<void> {
+    await this.authService.logout();
+  }
+
+  // Limpiar formulario
+  clearForm(): void {
+    this.email = '';
+    this.password = '';
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.needsVerification = false;
+  }
 }
+

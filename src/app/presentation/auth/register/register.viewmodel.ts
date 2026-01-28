@@ -1,22 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterViewModel {
-  // 1. Estado del formulario
-  name: string = 'Daniu';
-  email: string = 'daniu@gmail.com';
-  password: string = '123456';
-  confirmPassword: string = '123456';
+  private authService = inject(AuthService);
 
-  // 2. Estado de loading y error
+  // Estado del formulario
+  name: string = '';
+  email: string = '';
+  password: string = '';
+  confirmPassword: string = '';
+
+  // Estado de loading y error
   isLoading: boolean = false;
   errorMessage: string = '';
+  successMessage: string = '';
+  registrationComplete: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
-  // 3. Validación de campos y que passwords coincidan
+  // Validación de campos y que passwords coincidan
   validateFields(): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -41,20 +46,41 @@ export class RegisterViewModel {
     return true;
   }
 
-  // 4. Método para ejecutar registro (simulado)
+  // Método para ejecutar registro con Firebase
   async executeRegister(): Promise<boolean> {
     if (!this.validateFields()) return false;
 
     this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
     try {
-      // Simulación de delay de red
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      return true;
+      const result = await this.authService.register(this.email, this.password);
+
+      if (result.success) {
+        this.successMessage = result.message;
+        this.registrationComplete = true;
+        return true;
+      } else {
+        this.errorMessage = result.message;
+        return false;
+      }
     } catch (error) {
       this.errorMessage = 'Error al crear la cuenta. Inténtalo de nuevo.';
       return false;
     } finally {
       this.isLoading = false;
     }
+  }
+
+  // Limpiar formulario
+  clearForm(): void {
+    this.name = '';
+    this.email = '';
+    this.password = '';
+    this.confirmPassword = '';
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.registrationComplete = false;
   }
 }

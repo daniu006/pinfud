@@ -90,3 +90,81 @@ ion-content::part(scroll) {
 .register-btn:hover {
   opacity: 0.8;
 }
+
+.register-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.register-btn ion-spinner {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+/* Message styles */
+.success-message,
+.error-message,
+.info-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 8px;
+
+  ion-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+}
+
+.success-message {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.error-message {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.info-message {
+  background: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #90caf9;
+}
+
+/* Login link */
+.login-link {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  font-family: 'Montserrat', sans-serif;
+
+  a {
+    color: #4E070C;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+/* Login button (for after registration) */
+.login-btn {
+  background: #4E070C;
+  color: white;
+  padding: 12px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: 0.2s ease;
+  width: 100%;
+}

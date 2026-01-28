@@ -36,15 +36,23 @@
     <!-- Preview de imagen seleccionada -->
     @if (vm.selectedImage()) {
     <div class="image-preview-section">
-      <div class="image-preview">
-        <img [src]="vm.selectedImage()" alt="Preview" />
-        <button class="remove-image-btn" (click)="removeImage()">
-          <ion-icon name="close-circle"></ion-icon>
-        </button>
-      </div>
-
+      
       <!-- Formulario de detalles -->
       <div class="dish-form">
+
+        <!-- Preview compacto de la imagen -->
+        <div class="compact-preview">
+          <div class="preview-thumbnail">
+            <img [src]="vm.selectedImage()" alt="Preview" />
+          </div>
+          <div class="preview-info">
+            <span class="preview-label">Imagen seleccionada</span>
+            <button class="change-image-btn" (click)="removeImage()">
+              <ion-icon name="close-circle"></ion-icon>
+              Cambiar
+            </button>
+          </div>
+        </div>
 
         <div class="form-group">
           <label>Nombre del Plato</label>

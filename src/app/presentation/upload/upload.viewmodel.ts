@@ -43,7 +43,11 @@ export class UploadViewModel {
             if (image.dataUrl) {
                 this.selectedImage.set(image.dataUrl);
             }
-        } catch (error) {
+        } catch (error: any) {
+            // Ignorar si el usuario canceló la selección
+            if (error?.message?.toLowerCase().includes('cancelled')) {
+                return;
+            }
             console.error('Error al tomar foto:', error);
         }
     }
@@ -59,9 +63,14 @@ export class UploadViewModel {
             });
 
             if (image.dataUrl) {
+                console.log('Imagen seleccionada:', image.dataUrl.substring(0, 50) + '...');
                 this.selectedImage.set(image.dataUrl);
             }
-        } catch (error) {
+        } catch (error: any) {
+            // Ignorar si el usuario canceló la selección
+            if (error?.message?.toLowerCase().includes('cancelled')) {
+                return;
+            }
             console.error('Error al seleccionar imagen:', error);
         }
     }

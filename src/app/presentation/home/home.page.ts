@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule, NavController, ViewWillEnter } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
   searchOutline,
@@ -9,7 +9,7 @@ import {
   addOutline,
   notificationsOutline
 } from 'ionicons/icons';
-import { HomeViewModel } from './home.viewmodel';
+import { HomeViewModel, FoodImage } from './home.viewmodel';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +18,7 @@ import { HomeViewModel } from './home.viewmodel';
   standalone: true,
   imports: [CommonModule, IonicModule]
 })
-export class HomePage {
+export class HomePage implements ViewWillEnter {
   imageModalOpen: boolean = false;
   selectedItem: any = null;
 
@@ -30,6 +30,11 @@ export class HomePage {
       'add-outline': addOutline,
       'notifications-outline': notificationsOutline
     });
+  }
+
+  // Recargar imágenes cuando se vuelve a mostrar la página
+  ionViewWillEnter() {
+    this.vm.loadAllImages();
   }
 
   selectCategory(id: number) {
@@ -53,15 +58,17 @@ export class HomePage {
     this.nav.navigateForward('/notifications');
   }
 
-  openItem(item: any) {
+  openItem(item: FoodImage) {
     // Navegar a la página de detalle del plato
     this.nav.navigateForward('/dish', {
       state: {
         dish: {
           id: item.id,
-          name: this.getDishName(item.id),
+          name: item.name || this.getDishName(item.id),
           image: item.src,
-          region: this.getRegionName(item.categoryId)
+          region: this.getRegionName(item.categoryId),
+          description: item.description,
+          isUploaded: item.isUploaded
         }
       }
     });

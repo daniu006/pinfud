@@ -7,7 +7,10 @@ import { addIcons } from 'ionicons';
 import {
   logoGoogle,
   logoFacebook,
-  logoTwitter
+  logoTwitter,
+  checkmarkCircle,
+  alertCircle,
+  mail
 } from 'ionicons/icons';
 
 @Component({
@@ -19,18 +22,41 @@ import {
 })
 export class loginPage {
 
-  constructor( public vm: LoginViewModel, private navCtrl: NavController ) {
+  constructor(public vm: LoginViewModel, private navCtrl: NavController) {
     addIcons({
       logoGoogle,
       logoFacebook,
-      logoTwitter
+      logoTwitter,
+      checkmarkCircle,
+      alertCircle,
+      mail
     });
   }
 
   async onLogin() {
     const success = await this.vm.login();
     if (success) {
-      // Si el login es correcto, navegamos al Home
+      this.navCtrl.navigateRoot('/home');
+    }
+  }
+
+  async onGoogleLogin() {
+    const success = await this.vm.loginWithGoogle();
+    if (success) {
+      this.navCtrl.navigateRoot('/home');
+    }
+  }
+
+  async onFacebookLogin() {
+    const success = await this.vm.loginWithFacebook();
+    if (success) {
+      this.navCtrl.navigateRoot('/home');
+    }
+  }
+
+  async onTwitterLogin() {
+    const success = await this.vm.loginWithTwitter();
+    if (success) {
       this.navCtrl.navigateRoot('/home');
     }
   }
