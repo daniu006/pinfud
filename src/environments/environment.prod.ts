@@ -12,5 +12,6 @@ export const environment = {
   cloudinary: {
     cloudName: 'dgkwimlbm',
     uploadPreset: 'pinfud_upload'
-  }
+  },
+  groqApiKey: "TU_API_KEY_AQUI"
 };

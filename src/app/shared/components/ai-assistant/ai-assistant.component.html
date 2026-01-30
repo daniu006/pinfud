@@ -1,0 +1,56 @@
+<div class="ai-wrapper" *ngIf="showAssistant">
+  <div class="ai-button-container" [class.open]="isOpen">
+
+    <!-- Botón Flotante Premium -->
+    <div class="brain-fab-wrapper">
+      <button (click)="toggleAssistant()" class="brain-fab-btn">
+
+        <!-- Icono de Cerebro Inteligente Premium (Glowy Brain) -->
+        <svg *ngIf="!isOpen" viewBox="0 0 24 24" class="brain-icon" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer brain shape -->
+          <path
+            d="M12,2C7.58,2,4,5.58,4,10c0,1.66,0.5,3.19,1.37,4.47C6.12,15.54,6.64,16.37,6.8,17.38C6.93,18.23,7.66,18.88,8.52,18.88h6.96c0.86,0,1.59-0.65,1.72-1.5c0.16-1.01,0.68-1.84,1.43-2.91C19.5,13.19,20,11.66,20,10C20,5.58,16.42,2,12,2z" />
+          <!-- Smart/Digital detail inside -->
+          <path fill="#ffd54f"
+            d="M12,4c3.31,0,6,2.69,6,6c0,1.23-0.39,2.37-1.04,3.31c-0.96,1.4-1.53,2.49-1.76,3.58H8.8c-0.23-1.09-0.8-2.18-1.76-3.58C6.39,12.37,6,11.23,6,10C6,6.69,8.69,4,12,4z"
+            opacity="0.4" />
+          <!-- Brain pattern lines -->
+          <path fill="none" stroke="#fff" stroke-width="0.5"
+            d="M10,7c0.5-0.5,1.5-0.5,2,0M12,7c0.5-0.5,1.5-0.5,2,0M8,10c0.5-0.5,1.5-0.5,2,0M14,10c0.5-0.5,1.5-0.5,2,0M11,13c0.5-0.5,1.5-0.5,2,0" />
+          <!-- Base details -->
+          <path
+            d="M8.5,20c0,0.55,0.45,1,1,1h5c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1h-5C8.95,19,8.5,19.45,8.5,20V20z M10,22c0,0.55,0.45,1,1,1h2c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1h-2C10.45,21,10,21.45,10,22V22z" />
+        </svg>
+
+        <ion-icon name="close-outline" *ngIf="isOpen" class="close-icon"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Panel del Asistente (Overlay) -->
+    <div class="ai-panel" *ngIf="isOpen">
+      <div class="ai-header">
+        <ion-icon name="sparkles-outline"></ion-icon>
+        <span>Pinfud Brain</span>
+      </div>
+
+      <div class="ai-content">
+        <div class="message-list">
+          <div class="message" *ngFor="let msg of messages" [class.ai]="msg.role === 'ai'"
+            [class.user]="msg.role === 'user'">
+            {{ msg.text }}
+          </div>
+          <div class="message ai loading" *ngIf="isLoading">
+            <ion-spinner name="dots"></ion-spinner>
+          </div>
+        </div>
+      </div>
+
+      <div class="ai-footer">
+        <ion-input placeholder="Pregunta algo..." [(ngModel)]="userInput" (keyup.enter)="sendMessage()"></ion-input>
+        <ion-button fill="clear" (click)="sendMessage()" [disabled]="!userInput.trim() || isLoading">
+          <ion-icon name="send-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</div>

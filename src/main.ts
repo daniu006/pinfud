@@ -15,6 +15,8 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { environment } from './environments/environment';
 
+console.log('Main.ts: Bootstrapping app...');
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -30,6 +32,9 @@ bootstrapApplication(AppComponent, {
     // Cloudinary uses HTTP for uploads
     provideHttpClient(),
   ],
-});
+}).then(() => console.log('Main.ts: App bootstrapped successfully!'))
+  .catch(err => console.error('Main.ts: App bootstrap failed!', err));
+
+
 
 defineCustomElements(window);

@@ -16,8 +16,13 @@ export const environment = {
   cloudinary: {
     cloudName: 'dgkwimlbm',
     uploadPreset: 'pinfud_upload'
-  }
+  },
+  geminiApiKey: "TU_API_KEY_AQUI",
+  groqApiKey: "TU_API_KEY_AQUI"
 };
+
+
+
 
 /*
  * For easier debugging in development mode, you can import the following file
