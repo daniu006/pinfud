@@ -12,6 +12,8 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { environment } from './environments/environment';
 
+console.log('Main.ts: Bootstrapping app...');
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -21,6 +23,9 @@ bootstrapApplication(AppComponent, {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
   ],
-});
+}).then(() => console.log('Main.ts: App bootstrapped successfully!'))
+  .catch(err => console.error('Main.ts: App bootstrap failed!', err));
+
+
 
 defineCustomElements(window);

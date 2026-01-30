@@ -12,8 +12,13 @@ export const environment = {
     messagingSenderId: "613093766310",
     appId: "1:613093766310:web:b90ac3b137fd317cc3f067",
     measurementId: "G-RN7684R07K"
-  }
+  },
+  geminiApiKey: "TU_API_KEY_AQUI",
+  groqApiKey: "TU_API_KEY_AQUI"
 };
+
+
+
 
 /*
  * For easier debugging in development mode, you can import the following file
