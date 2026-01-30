@@ -19,7 +19,7 @@ export const environment = {
   },
   geminiApiKey: "TU_API_KEY_AQUI",
   groqApiKey: "TU_API_KEY_AQUI"
-};
+}; // PinFud Final Version
 
 
 
