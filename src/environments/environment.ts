@@ -12,6 +12,10 @@ export const environment = {
     messagingSenderId: "613093766310",
     appId: "1:613093766310:web:b90ac3b137fd317cc3f067",
     measurementId: "G-RN7684R07K"
+  },
+  cloudinary: {
+    cloudName: 'dgkwimlbm',
+    uploadPreset: 'pinfud_upload'
   }
 };
 

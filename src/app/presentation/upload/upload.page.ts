@@ -20,7 +20,8 @@ import {
   cameraOutline,
   imagesOutline,
   closeCircle,
-  checkmarkCircle
+  checkmarkCircle,
+  restaurantOutline
 } from 'ionicons/icons';
 
 @Component({
@@ -50,13 +51,23 @@ export class UploadPage implements OnInit {
       cameraOutline,
       imagesOutline,
       closeCircle,
-      checkmarkCircle
+      checkmarkCircle,
+      restaurantOutline
     });
   }
 
   ngOnInit() {
-    // Resetear formulario al entrar
-    this.vm.resetForm();
+    // Check for pre-selected image from Gallery
+    const nav = this.router.getCurrentNavigation();
+    if (nav?.extras.state && nav.extras.state['preselectedImage']) {
+      this.vm.setPreselectedImage(
+        nav.extras.state['preselectedImage'],
+        nav.extras.state['photoId']
+      );
+    } else {
+      // Reset normally if no pre-selected image
+      this.vm.resetForm();
+    }
   }
 
   goBack() {

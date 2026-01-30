@@ -1,0 +1,63 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/profile"></ion-back-button>
+        </ion-buttons>
+        <ion-title color="dark" class="ion-text-center fw-bold">Mis Recuerdos</ion-title>
+        <ion-buttons slot="end">
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="light-bg">
+    <div class="content-wrapper">
+
+        <!-- Header Message -->
+        <div class="gallery-header ion-padding">
+            <h1>Tu colección</h1>
+            <p class="text-muted">Guarda tus momentos favoritos aquí.</p>
+        </div>
+
+        @if (isLoading) {
+        <div class="loading-state">
+            <ion-spinner name="crescent" color="primary"></ion-spinner>
+            <p>Cargando tus fotos...</p>
+        </div>
+        } @else if (photos.length === 0) {
+        <div class="empty-state">
+            <div class="icon-circle">
+                <ion-icon name="images-outline" color="medium"></ion-icon>
+            </div>
+            <h3>¡Está muy vacío aquí!</h3>
+            <p>Sube tu primera foto para empezar tu galería.</p>
+            <ion-button expand="block" shape="round" class="upload-btn-lg" (click)="selectUploadMethod()">
+                <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+                Subir Foto Ahora
+            </ion-button>
+        </div>
+        } @else {
+        <div class="masonry-grid">
+            @for (photo of photos; track photo.id) {
+            <div class="grid-item">
+                <img [src]="photo.url" [alt]="photo.name" loading="lazy" (click)="openPhotoOptions(photo)">
+                <div class="publish-badge" [class.published]="photo.dishId"
+                    (click)="!photo.dishId && publishAsDish(photo)">
+                    <ion-icon [name]="photo.dishId ? 'checkmark-circle' : 'cloud-upload-outline'"></ion-icon>
+                    <span>{{ photo.dishId ? 'Publicado' : 'Publicar' }}</span>
+                </div>
+                <div class="options-btn" (click)="openPhotoOptions(photo)">
+                    <ion-icon name="ellipsis-horizontal"></ion-icon>
+                </div>
+            </div>
+            }
+        </div>
+        }
+    </div>
+
+    <!-- Prominent Floating Action Button (FAB) for Upload -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-margin">
+        <ion-fab-button color="primary" (click)="selectUploadMethod()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

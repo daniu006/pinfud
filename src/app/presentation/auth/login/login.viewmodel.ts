@@ -36,6 +36,8 @@ export class LoginViewModel {
 
   // Método para ejecutar login con Firebase
   async login(): Promise<boolean> {
+    if (!this.email) return false;
+    this.email = this.email.trim();
     if (!this.isFormValid()) return false;
 
     this.isLoading = true;

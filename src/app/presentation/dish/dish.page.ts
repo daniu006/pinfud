@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonIcon, AlertController } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DishViewModel, Dish } from './dish.viewmodel';
 import { addIcons } from 'ionicons';
-import { arrowBack, heart, heartOutline, shareOutline, downloadOutline, bookmark, bookmarkOutline } from 'ionicons/icons';
+import { arrowBack, heart, heartOutline, shareOutline, downloadOutline, bookmark, bookmarkOutline, trashOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-dish',
@@ -19,9 +19,10 @@ export class DishPage implements OnInit {
   constructor(
     public vm: DishViewModel,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController
   ) {
-    addIcons({ arrowBack, heart, heartOutline, shareOutline, downloadOutline, bookmark, bookmarkOutline });
+    addIcons({ arrowBack, heart, heartOutline, shareOutline, downloadOutline, bookmark, bookmarkOutline, trashOutline });
   }
 
   ngOnInit() {
@@ -55,5 +56,29 @@ export class DishPage implements OnInit {
 
   onSave(): void {
     this.vm.saveToFavorites();
+  }
+
+  async onDelete() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar',
+      message: '¿Estás seguro de que quieres eliminar este plato? Se quitará definitivamente del feed.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            const success = await this.vm.deleteCurrentDish();
+            if (success) {
+              this.goBack('/home');
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

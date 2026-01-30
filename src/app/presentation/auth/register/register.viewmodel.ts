@@ -1,11 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
+import { UserService } from '../../../core/services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterViewModel {
   private authService = inject(AuthService);
+  private userService = inject(UserService);
 
   // Estado del formulario
   name: string = '';
@@ -57,7 +59,10 @@ export class RegisterViewModel {
     try {
       const result = await this.authService.register(this.email, this.password);
 
-      if (result.success) {
+      if (result.success && result.user) {
+        // Crear perfil en Firestore
+        await this.userService.createUserProfile(result.user, this.name);
+
         this.successMessage = result.message;
         this.registrationComplete = true;
         return true;

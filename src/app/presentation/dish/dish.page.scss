@@ -10,30 +10,47 @@
 }
 
 // Back Button
-.back-button {
+.back-button,
+.delete-button {
     position: absolute;
-    top: 28px;
-    left: 28px;
-    z-index: 100;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
+    top: 40px;
+    z-index: 1000;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 12px;
+    background: rgba(30, 3, 5, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(248, 239, 231, 0.1);
+    color: var(--pinfud-cream);
     cursor: pointer;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     ion-icon {
-        font-size: 24px;
-        color: #4E070C;
+        font-size: 20px;
     }
 
     &:active {
-        transform: scale(0.95);
-        background: rgba(255, 255, 255, 1);
+        transform: scale(0.9);
+        background: rgba(30, 3, 5, 0.6);
+    }
+}
+
+.back-button {
+    left: 20px;
+}
+
+.delete-button {
+    right: 20px;
+    color: #ff5e5e;
+    background: rgba(255, 94, 94, 0.1);
+    border-color: rgba(255, 94, 94, 0.2);
+
+    &:active {
+        background: rgba(255, 94, 94, 0.2);
     }
 }
 
@@ -97,10 +114,32 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.dish-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
 .dish-region {
     font-size: 16px;
     color: #f0f0f0;
     margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.dish-divider {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.uploader-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
     font-family: 'Montserrat', sans-serif;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }

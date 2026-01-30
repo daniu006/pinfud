@@ -7,33 +7,45 @@
     </div>
 
     <div class="user-info">
-      <div class="avatar-wrapper">
-        <img [src]="vm.user().avatar" alt="Avatar" class="user-avatar" />
+      <div class="avatar-wrapper" (click)="avatarInput.click()">
+        <img [src]="vm.safeAvatar()" alt="Avatar" class="user-avatar" />
+        <div class="avatar-edit-icon">
+          <ion-icon name="camera"></ion-icon>
+        </div>
       </div>
-      <h2 class="user-name">{{ vm.user().name }}</h2>
-      <p class="user-email">{{ vm.user().email }}</p>
+      <!-- Hidden File Input -->
+      <input type="file" #avatarInput (change)="onAvatarChange($event)" accept="image/*" style="display: none;">
+
+      @if (vm.user()) {
+      <h2 class="user-name">{{ vm.user()?.name }}</h2>
+      <p class="user-email">{{ vm.user()?.email }}</p>
+      } @else {
+      <ion-skeleton-text animated style="width: 150px; height: 24px; margin: 10px auto;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 200px; height: 16px; margin: 5px auto;"></ion-skeleton-text>
+      }
     </div>
   </div>
 
-  <!-- Saved Dishes Section -->
+  <!-- My Photos & Saved Dishes Combined (Grid) -->
   <div class="saved-section">
     <div class="section-header">
-      <span class="section-title">Platos Guardados</span>
-      <span class="section-count">{{ vm.savedCount() }}</span>
+      <span class="section-title">Mis Platos Guardados</span>
+      <span class="section-count">{{ vm.allDishesCount() }}</span>
     </div>
 
-    @if (vm.hasSavedDishes()) {
-    <div class="dishes-grid">
-      @for (dish of vm.savedDishes(); track dish.id) {
-      <div class="dish-item" (click)="onDishClick(dish)">
-        <img [src]="dish.image" [alt]="dish.name" class="dish-image" />
+    @if (vm.hasAnyDish()) {
+    <div class="horizontal-scroll">
+      @for (dish of vm.allDishes(); track dish.id) {
+      <div class="dish-card-horizontal" (click)="onDishClick(dish)">
+        <img [src]="dish.image" [alt]="dish.name" />
+        <div class="dish-name-overlay">{{ dish.name }}</div>
       </div>
       }
     </div>
     } @else {
     <div class="empty-dishes">
       <ion-icon name="bookmark-outline"></ion-icon>
-      <p>No tienes platos guardados</p>
+      <p>Aún no tienes platos guardados</p>
     </div>
     }
   </div>
@@ -43,6 +55,11 @@
     <button class="action-btn" (click)="onAddAccount()">
       <ion-icon name="person-add-outline"></ion-icon>
       <span>Agregar Cuenta</span>
+    </button>
+
+    <button class="action-btn" (click)="onGallery()">
+      <ion-icon name="images"></ion-icon>
+      <span>Mi Galería</span>
     </button>
 
     <button class="action-btn" (click)="onInfo()">

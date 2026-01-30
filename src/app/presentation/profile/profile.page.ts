@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonIcon, IonFooter } from '@ionic/angular/standalone';
-import { NavController } from '@ionic/angular/standalone';
+import { IonContent, IonIcon, IonFooter, IonSkeletonText } from '@ionic/angular/standalone';
+import { NavController, ViewWillEnter } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
   bookmarkOutline,
@@ -11,7 +11,9 @@ import {
   logOutOutline,
   homeOutline,
   addOutline,
-  notificationsOutline
+  notificationsOutline,
+  images,
+  camera
 } from 'ionicons/icons';
 import { ProfileViewModel, SavedDish } from './profile.viewmodel';
 
@@ -20,9 +22,9 @@ import { ProfileViewModel, SavedDish } from './profile.viewmodel';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [IonContent, IonIcon, IonFooter, CommonModule, FormsModule]
+  imports: [IonContent, IonIcon, IonFooter, IonSkeletonText, CommonModule, FormsModule]
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage implements OnInit, ViewWillEnter {
 
   vm = inject(ProfileViewModel);
   private navCtrl = inject(NavController);
@@ -35,22 +37,45 @@ export class ProfilePage implements OnInit {
       logOutOutline,
       homeOutline,
       addOutline,
-      notificationsOutline
+      notificationsOutline,
+      images,
+      camera
     });
+  }
+
+  ionViewWillEnter(): void {
+    this.vm.loadUserData();
   }
 
   ngOnInit(): void {
     this.vm.loadUserData();
   }
 
+  async onAvatarChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      await this.vm.updateAvatar(file);
+    }
+  }
+
   onDishClick(dish: SavedDish): void {
-    console.log('Plato seleccionado:', dish);
-    // this.navCtrl.navigateForward(`/dish/${dish.id}`);
+    console.log('Plato seleccionado desde perfil:', dish);
+    this.navCtrl.navigateForward('/dish', {
+      state: {
+        dish: {
+          id: dish.id,
+          name: dish.name,
+          image: dish.image,
+          region: dish.region || 'Ecuador',
+          description: '', // Descripciones no se guardan directamente en el Favorito simplificado
+          isSaved: true
+        }
+      }
+    });
   }
 
   onAddAccount(): void {
-    console.log('Agregar cuenta');
-    // Lógica para agregar otra cuenta
+    this.navCtrl.navigateForward('/register');
   }
 
   onInfo(): void {
@@ -58,16 +83,18 @@ export class ProfilePage implements OnInit {
     // Navegar a página de información
   }
 
+  onGallery(): void {
+    this.navCtrl.navigateForward('/gallery');
+  }
+
   setActiveTab(tab: string): void {
     if (tab === 'home') {
       this.navCtrl.navigateRoot('/home');
     } else if (tab === 'add') {
-      console.log('Agregar nuevo plato...');
-      // Aquí irá la lógica para agregar plato
+      this.navCtrl.navigateForward('/upload');
     } else if (tab === 'notifications') {
       this.vm.markNotificationsAsRead();
-      console.log('Abriendo notificaciones...');
-      // Aquí irá la navegación a notificaciones
+      this.navCtrl.navigateForward('/notifications');
     }
   }
 

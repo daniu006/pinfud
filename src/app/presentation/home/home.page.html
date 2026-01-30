@@ -8,7 +8,7 @@
 
       <div class="top-right">
         <div class="profile-btn" (click)="openProfile()">
-          <img src="assets/img/gato.jpeg" alt="Profile" class="profile-img">
+          <img [src]="vm.currentUser()?.photoURL || 'assets/img/gato.jpeg'" alt="Profile" class="profile-img">
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
 
   <div class="pinterest-grid">
     <div *ngFor="let item of vm.filteredImages" class="image-item" (click)="openItem(item)">
-      <img [src]="item.src"/>
+      <img [src]="item.src" />
     </div>
   </div>
 

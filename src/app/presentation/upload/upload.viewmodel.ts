@@ -1,5 +1,8 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { PhotoService } from '../../core/services/photo.service';
+import { DishService, Dish } from '../../core/services/dish.service';
+import { Auth } from '@angular/fire/auth';
 
 export interface DishUpload {
     image: string;
@@ -12,6 +15,9 @@ export interface DishUpload {
     providedIn: 'root'
 })
 export class UploadViewModel {
+    private photoService = inject(PhotoService);
+    private dishService = inject(DishService);
+    private auth = inject(Auth);
 
     // Señales para el estado
     selectedImage = signal<string | null>(null);
@@ -19,6 +25,7 @@ export class UploadViewModel {
     selectedRegion = signal<string>('');
     description = signal<string>('');
     isUploading = signal<boolean>(false);
+    currentPhotoId = signal<string | null>(null);
 
     // Regiones disponibles
     regions = [
@@ -29,6 +36,14 @@ export class UploadViewModel {
     ];
 
     constructor() { }
+
+    // Set an image already hosted (e.g. from Gallery)
+    setPreselectedImage(url: string, photoId?: string): void {
+        this.selectedImage.set(url);
+        if (photoId) {
+            this.currentPhotoId.set(photoId);
+        }
+    }
 
     // Tomar foto con la cámara
     async takePhoto(): Promise<void> {
@@ -44,7 +59,6 @@ export class UploadViewModel {
                 this.selectedImage.set(image.dataUrl);
             }
         } catch (error: any) {
-            // Ignorar si el usuario canceló la selección
             if (error?.message?.toLowerCase().includes('cancelled')) {
                 return;
             }
@@ -63,11 +77,9 @@ export class UploadViewModel {
             });
 
             if (image.dataUrl) {
-                console.log('Imagen seleccionada:', image.dataUrl.substring(0, 50) + '...');
                 this.selectedImage.set(image.dataUrl);
             }
         } catch (error: any) {
-            // Ignorar si el usuario canceló la selección
             if (error?.message?.toLowerCase().includes('cancelled')) {
                 return;
             }
@@ -85,7 +97,19 @@ export class UploadViewModel {
         );
     }
 
-    // Subir plato (por ahora guarda en localStorage, listo para Firebase)
+    // Helper to convert DataURL to Blob
+    private dataURItoBlob(dataURI: string): Blob {
+        const byteString = atob(dataURI.split(',')[1]);
+        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], { type: mimeString });
+    }
+
+    // Subir plato usando PhotoService y DishService
     async uploadDish(): Promise<boolean> {
         if (!this.isFormValid()) {
             return false;
@@ -94,21 +118,44 @@ export class UploadViewModel {
         this.isUploading.set(true);
 
         try {
-            const dish: DishUpload = {
-                image: this.selectedImage()!,
+            const imageData = this.selectedImage();
+            const photoId = this.currentPhotoId();
+            if (!imageData) return false;
+
+            let downloadUrl = imageData;
+
+            // 1. If it's a DataURL (base64), it's a new photo -> Upload to Cloudinary
+            if (imageData.startsWith('data:')) {
+                const blob = this.dataURItoBlob(imageData);
+                downloadUrl = await this.photoService.uploadImageToCloudinary(blob);
+            }
+
+            // 2. Create the Dish in the public collection
+            const fileName = this.dishName();
+            const currentUser = this.auth.currentUser;
+            const newDish: Dish = {
                 name: this.dishName(),
+                description: this.description(),
+                image: downloadUrl,
                 region: this.selectedRegion(),
-                description: this.description()
+                userId: currentUser?.uid,
+                createdAt: new Date().toISOString()
             };
 
-            // Guardar en localStorage (temporal, aquí irá Firebase)
-            const savedDishes = this.getSavedDishes();
-            savedDishes.push(dish);
-            localStorage.setItem('uploadedDishes', JSON.stringify(savedDishes));
+            const dishId = await this.dishService.addDish(newDish);
 
-            // Limpiar formulario
+            // 3. Link metadata
+            if (photoId) {
+                // UPDATE existing photo record if it came from the gallery
+                console.log('DEBUG: Updating existing photo metadata with dishId:', photoId, dishId);
+                await this.photoService.updatePhotoMetadata(photoId, { dishId });
+            } else {
+                // SAVE new photo metadata if it's a fresh upload
+                console.log('DEBUG: Creating new photo metadata with dishId:', dishId);
+                await this.photoService.savePhotoMetadata(downloadUrl, fileName, dishId);
+            }
+
             this.resetForm();
-
             this.isUploading.set(false);
             return true;
         } catch (error) {
@@ -124,11 +171,6 @@ export class UploadViewModel {
         this.dishName.set('');
         this.selectedRegion.set('');
         this.description.set('');
-    }
-
-    // Obtener platos guardados
-    private getSavedDishes(): DishUpload[] {
-        const saved = localStorage.getItem('uploadedDishes');
-        return saved ? JSON.parse(saved) : [];
+        this.currentPhotoId.set(null);
     }
 }

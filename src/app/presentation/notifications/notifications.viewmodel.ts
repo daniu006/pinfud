@@ -1,4 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal, OnDestroy } from '@angular/core';
+import { Auth, authState } from '@angular/fire/auth';
+import { NotificationService, AppNotification } from '../../core/services/notification.service';
+import { Subscription } from 'rxjs';
 
 export interface Notification {
     id: number;
@@ -14,88 +17,58 @@ export interface Notification {
 @Injectable({
     providedIn: 'root'
 })
-export class NotificationsViewModel {
+export class NotificationsViewModel implements OnDestroy {
+    private auth = inject(Auth);
+    private notificationService = inject(NotificationService);
+    private sub: Subscription | null = null;
 
     // Señales
-    notifications = signal<Notification[]>([]);
-    hasUnread = signal<boolean>(true);
+    notifications = signal<AppNotification[]>([]);
+    hasUnread = signal<boolean>(false);
 
     constructor() {
-        this.loadNotifications();
+        this.initNotificationListener();
     }
 
-    // Cargar notificaciones (mock data, listo para Firebase)
-    private loadNotifications(): void {
-        const mockNotifications: Notification[] = [
-            {
-                id: 1,
-                type: 'like',
-                title: 'Nuevo me gusta',
-                message: 'A María le gustó tu foto de Encebollado',
-                timestamp: new Date(Date.now() - 1000 * 60 * 5), // hace 5 minutos
-                isRead: false,
-                icon: 'heart',
-                userImage: 'assets/img/gato.jpeg'
-            },
-            {
-                id: 2,
-                type: 'comment',
-                title: 'Nuevo comentario',
-                message: 'Juan comentó: "¡Se ve delicioso!"',
-                timestamp: new Date(Date.now() - 1000 * 60 * 30), // hace 30 minutos
-                isRead: false,
-                icon: 'chatbubble',
-                userImage: 'assets/img/gato.jpeg'
-            },
-            {
-                id: 3,
-                type: 'follow',
-                title: 'Nuevo seguidor',
-                message: 'Ana comenzó a seguirte',
-                timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // hace 2 horas
-                isRead: false,
-                icon: 'person-add',
-                userImage: 'assets/img/gato.jpeg'
-            },
-            {
-                id: 4,
-                type: 'system',
-                title: 'Bienvenido a Pinfüd',
-                message: 'Explora los mejores platos de Ecuador',
-                timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // hace 1 día
-                isRead: true,
-                icon: 'notifications'
+    private initNotificationListener(): void {
+        authState(this.auth).subscribe(user => {
+            if (user) {
+                this.sub?.unsubscribe();
+                this.sub = this.notificationService.getNotifications$(user.uid).subscribe(notifs => {
+                    this.notifications.set(notifs);
+                    this.updateUnreadStatus();
+                });
+            } else {
+                this.notifications.set([]);
+                this.hasUnread.set(false);
+                this.sub?.unsubscribe();
             }
-        ];
+        });
+    }
 
-        this.notifications.set(mockNotifications);
-        this.updateUnreadStatus();
+    ngOnDestroy(): void {
+        this.sub?.unsubscribe();
     }
 
     // Marcar todas como leídas
-    markAllAsRead(): void {
-        this.notifications.update(notifications =>
-            notifications.map(n => ({ ...n, isRead: true }))
-        );
-        this.updateUnreadStatus();
+    async markAllAsRead(): Promise<void> {
+        const user = this.auth.currentUser;
+        if (!user) return;
+        await this.notificationService.markAllAsRead(user.uid);
     }
 
     // Marcar una notificación como leída
-    markAsRead(id: number): void {
-        this.notifications.update(notifications =>
-            notifications.map(n =>
-                n.id === id ? { ...n, isRead: true } : n
-            )
-        );
-        this.updateUnreadStatus();
+    async markAsRead(id: string): Promise<void> {
+        const user = this.auth.currentUser;
+        if (!user) return;
+        await this.notificationService.markAsRead(user.uid, id);
     }
 
     // Eliminar notificación
-    deleteNotification(id: number): void {
-        this.notifications.update(notifications =>
-            notifications.filter(n => n.id !== id)
-        );
-        this.updateUnreadStatus();
+    async deleteNotification(id: string): Promise<void> {
+        const user = this.auth.currentUser;
+        if (!user) return;
+        await this.notificationService.deleteNotification(user.uid, id);
     }
 
     // Actualizar estado de no leídas
@@ -105,7 +78,8 @@ export class NotificationsViewModel {
     }
 
     // Formatear tiempo relativo
-    getRelativeTime(date: Date): string {
+    getRelativeTime(timestamp: string): string {
+        const date = new Date(timestamp);
         const now = new Date();
         const diffMs = now.getTime() - date.getTime();
         const diffMins = Math.floor(diffMs / 60000);
@@ -116,7 +90,7 @@ export class NotificationsViewModel {
         if (diffMins < 60) return `Hace ${diffMins} min`;
         if (diffHours < 24) return `Hace ${diffHours}h`;
         if (diffDays === 1) return 'Ayer';
-        if (diffDays < 7) return `Hace ${diffDays} días`;
+        if (diffDays < 7) return `Hace ${diffDays} d`;
         return date.toLocaleDateString('es-EC');
     }
 

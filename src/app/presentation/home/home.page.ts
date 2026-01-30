@@ -64,18 +64,21 @@ export class HomePage implements ViewWillEnter {
       state: {
         dish: {
           id: item.id,
-          name: item.name || this.getDishName(item.id),
+          name: item.name || this.getDishNameById(item.id),
           image: item.src,
           region: this.getRegionName(item.categoryId),
           description: item.description,
-          isUploaded: item.isUploaded
+          isUploaded: item.isUploaded,
+          userId: item.userId
         }
       }
     });
   }
 
   // Obtener nombre del plato según ID
-  private getDishName(id: number): string {
+  private getDishNameById(id: string | number): string {
+    if (typeof id === 'string') return 'Plato Compartido';
+
     const names: { [key: number]: string } = {
       1: 'Bollo de Pescado',
       2: 'Fritada',

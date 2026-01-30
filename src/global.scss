@@ -43,3 +43,143 @@
   /* variable font */
   font-style: normal;
 }
+
+/* 
+ * Premium Dark Theme for Overlays (Alerts, Action Sheets, Popovers)
+ * Using PinFud brand palette for a consistent look.
+ */
+
+:root {
+  --pinfud-primary: #4E070C;
+  --pinfud-primary-light: #8E1F26;
+  --pinfud-primary-dark: #2D0407;
+  --pinfud-accent: #E6A23C;
+  --pinfud-bg: #fefcfb;
+  --pinfud-cream: #F8EFE7;
+  --pinfud-white: #ffffff;
+
+  --overlay-bg: #1e0305;
+  --overlay-radius: 32px;
+
+  /* Overriding Ionic Primary Colors */
+  --ion-color-primary: var(--pinfud-primary);
+  --ion-color-primary-rgb: 78, 7, 12;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: var(--pinfud-primary-dark);
+  --ion-color-primary-tint: var(--pinfud-primary-light);
+}
+
+/* Alerts & Popovers: Fully Rounded */
+.alert-wrapper,
+.popover-wrapper {
+  --background: var(--overlay-bg) !important;
+  background: var(--overlay-bg) !important;
+  border: 1px solid rgba(248, 239, 231, 0.08);
+  border-radius: var(--overlay-radius) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Action Sheets: Attached to Bottom, NO Margin */
+.action-sheet-wrapper {
+  --background: var(--overlay-bg) !important;
+  background: var(--overlay-bg) !important;
+  border: 1px solid rgba(248, 239, 231, 0.08);
+  border-bottom: none !important;
+  border-radius: var(--overlay-radius) var(--overlay-radius) 0 0 !important;
+  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.4) !important;
+  max-width: 100% !important;
+  /* Full width for bottom attachment */
+  width: 100% !important;
+  margin: 0 !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+}
+
+.action-sheet-container {
+  padding: 0 !important;
+
+  /* Remove side padding so it touches edges */
+  .action-sheet-wrapper {
+    border-radius: var(--overlay-radius) var(--overlay-radius) 0 0 !important;
+  }
+}
+
+/* Text Colors in Overlays */
+.alert-title,
+.alert-sub-title,
+.alert-radio-label,
+.alert-checkbox-label,
+.action-sheet-title,
+.action-sheet-sub-title,
+.popover-content {
+  color: var(--pinfud-cream) !important;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+.alert-title,
+.action-sheet-title {
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  letter-spacing: -0.2px;
+}
+
+.action-sheet-title {
+  padding-top: 24px !important;
+  padding-bottom: 16px !important;
+}
+
+.alert-message {
+  color: rgba(248, 239, 231, 0.7) !important;
+  font-size: 14px !important;
+}
+
+/* Button & Selection Styles */
+.action-sheet-button-inner,
+.alert-button-inner {
+  color: var(--pinfud-cream) !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+}
+
+.action-sheet-button {
+  --background: transparent;
+  border-bottom: 1px solid rgba(248, 239, 231, 0.05);
+  border-radius: 0 !important;
+  min-height: 54px !important;
+
+  &.role-destructive {
+    color: #ff5e5e !important;
+
+    .action-sheet-button-inner {
+      color: #ff5e5e !important;
+    }
+  }
+
+  &.role-cancel {
+    background: rgba(248, 239, 231, 0.03) !important;
+    margin-top: 0 !important;
+    /* Keep it attached */
+  }
+}
+
+/* Shadow DOM variables for newer Ionic versions */
+ion-alert,
+ion-action-sheet,
+ion-popover {
+  --background: var(--overlay-bg) !important;
+  --color: var(--pinfud-cream) !important;
+  --button-color: var(--pinfud-cream) !important;
+}
+
+ion-alert {
+  --header-color: var(--pinfud-cream) !important;
+  --message-color: rgba(248, 239, 231, 0.7) !important;
+  --border-radius: var(--overlay-radius) !important;
+}
+
+ion-action-sheet {
+  --button-background: transparent;
+  --button-background-selected: rgba(248, 239, 231, 0.05);
+}

@@ -14,9 +14,11 @@
     @if (!vm.selectedImage()) {
     <div class="image-selector">
       <div class="selector-content">
-        <ion-icon name="images-outline" class="selector-icon"></ion-icon>
-        <h2>Agrega una foto de tu plato</h2>
-        <p>Comparte la gastronomía ecuatoriana</p>
+        <div class="selector-icon-wrapper">
+          <ion-icon name="restaurant-outline" class="selector-icon"></ion-icon>
+        </div>
+        <h2>¡Comparte tu delicia!</h2>
+        <p>Sube una foto de tu plato favorito y ayuda a otros a descubrir la comida ecuatoriana</p>
       </div>
 
       <div class="action-buttons">
@@ -27,7 +29,7 @@
 
         <button class="action-btn gallery-btn" (click)="selectFromGallery()">
           <ion-icon name="images-outline"></ion-icon>
-          <span>Seleccionar de Galería</span>
+          <span>Elegir de mi Galería</span>
         </button>
       </div>
     </div>
@@ -36,7 +38,7 @@
     <!-- Preview de imagen seleccionada -->
     @if (vm.selectedImage()) {
     <div class="image-preview-section">
-      
+
       <!-- Formulario de detalles -->
       <div class="dish-form">
 

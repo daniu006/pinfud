@@ -5,6 +5,12 @@
     <ion-icon name="arrow-back"></ion-icon>
   </div>
 
+  @if (vm.isOwner()) {
+  <div class="delete-button" (click)="onDelete()">
+    <ion-icon name="trash-outline" color="danger"></ion-icon>
+  </div>
+  }
+
   <!-- Main Dish Image -->
   @if (vm.currentDish()) {
   <div class="dish-image-container">
@@ -17,7 +23,11 @@
   <!-- Dish Info Overlay -->
   <div class="dish-info-overlay">
     <h1 class="dish-name">{{ vm.currentDish()!.name }}</h1>
-    <p class="dish-region">{{ vm.currentDish()!.region }}</p>
+    <div class="dish-meta">
+      <span class="dish-region">{{ vm.currentDish()!.region }}</span>
+      <span class="dish-divider"></span>
+      <span class="uploader-name">Por {{ vm.uploaderName() }}</span>
+    </div>
   </div>
 
   <!-- Action Bar -->

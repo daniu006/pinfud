@@ -1,21 +1,52 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject, signal, computed } from '@angular/core';
+import { DishService } from '../../core/services/dish.service';
+import { UserService } from '../../core/services/user.service';
+import { Auth, user } from '@angular/fire/auth';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NotificationsViewModel } from '../notifications/notifications.viewmodel';
 
 export interface FoodImage {
-  id: number;
+  id: string | number;
   src: string;
   categoryId: number;
   name?: string;
   description?: string;
   isUploaded?: boolean;
+  userId?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeViewModel {
+  private dishService = inject(DishService);
+  private notificationVM = inject(NotificationsViewModel);
+  private auth = inject(Auth);
+  private userService = inject(UserService);
+
+  // Perfil del usuario desde Firestore
+  userProfile = signal<any>(null);
+
+  // Usuario actual (Reactivo)
+  currentUser = toSignal(user(this.auth));
+
+  // Nombre de usuario formateado
+  userName = computed(() => {
+    const p = this.userProfile();
+    if (p && p.name) return p.name.split(' ')[0];
+
+    const u = this.currentUser();
+    if (!u?.displayName) return 'Chef';
+    return u.displayName.split(' ')[0];
+  });
+
   // Estado actual
   selectedCategory: number = 1;
-  hasNotifications: boolean = true;
+
+  // Usar la señal del NotificationsViewModel para el punto rojo del footer
+  get hasNotifications() {
+    return this.notificationVM.hasUnread();
+  }
 
   // Datos (Movidos desde home.page.ts)
   categories = [
@@ -48,52 +79,49 @@ export class HomeViewModel {
     { id: 10, src: 'assets/img/coladaMorada.jpg', categoryId: 3, name: 'Colada Morada' }
   ];
 
-  // Lista combinada (subidas + estáticas)
+  // Lista combinada (subidas + estáticas) (ahora con ID string|number)
   foodImages: FoodImage[] = [];
 
   // Lista que se muestra en la UI
   filteredImages: FoodImage[] = [];
 
   constructor() {
+    this.initUser();
     this.loadAllImages();
   }
 
+  private initUser() {
+    user(this.auth).subscribe(async u => {
+      if (u) {
+        const profile = await this.userService.getUserProfile(u.uid);
+        this.userProfile.set(profile);
+      } else {
+        this.userProfile.set(null);
+      }
+    });
+  }
+
   // Cargar todas las imágenes incluyendo las subidas
-  loadAllImages() {
-    const uploadedDishes = this.getUploadedDishes();
+  async loadAllImages() {
+    const uploadedDishes = await this.getUploadedDishes();
     // Combinar subidas (primero) + estáticas
     this.foodImages = [...uploadedDishes, ...this.staticImages];
     this.filterByCategory(this.selectedCategory);
   }
 
-  // Obtener platos subidos desde localStorage
-  private getUploadedDishes(): FoodImage[] {
+  // Obtener platos subidos desde Firestore
+  private async getUploadedDishes(): Promise<FoodImage[]> {
     try {
-      const saved = localStorage.getItem('uploadedDishes');
-      if (!saved) return [];
+      const dishes = await this.dishService.getDishes();
 
-      const dishes = JSON.parse(saved);
-
-      // Eliminar duplicados por imagen (misma URL base64)
-      const uniqueDishes: any[] = [];
-      const seenImages = new Set<string>();
-
-      for (const dish of dishes) {
-        // Usar los primeros 100 caracteres de la imagen como identificador
-        const imageKey = dish.image?.substring(0, 100);
-        if (imageKey && !seenImages.has(imageKey)) {
-          seenImages.add(imageKey);
-          uniqueDishes.push(dish);
-        }
-      }
-
-      return uniqueDishes.map((dish: any, index: number) => ({
-        id: 1000 + index,
+      return dishes.map(dish => ({
+        id: dish.id || Math.random(),
         src: dish.image,
-        categoryId: this.regionToCategoryId[dish.region] || 1,
+        categoryId: this.regionToCategoryId[dish.region.toLowerCase()] || 1,
         name: dish.name,
         description: dish.description,
-        isUploaded: true
+        isUploaded: true,
+        userId: dish.userId
       }));
     } catch {
       return [];
@@ -111,6 +139,6 @@ export class HomeViewModel {
   }
 
   markNotificationsAsRead() {
-    this.hasNotifications = false;
+    this.notificationVM.markAllAsRead();
   }
 }

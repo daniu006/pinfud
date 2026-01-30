@@ -50,12 +50,11 @@ export class NotificationsPage implements OnInit {
         this.router.navigate(['/home']);
     }
 
-    onNotificationClick(id: number) {
+    onNotificationClick(id: string) {
         this.vm.markAsRead(id);
-        // Aquí podrías navegar a la página correspondiente
     }
 
-    deleteNotification(event: Event, id: number) {
+    deleteNotification(event: Event, id: string) {
         event.stopPropagation();
         this.vm.deleteNotification(id);
     }

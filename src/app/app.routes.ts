@@ -64,4 +64,8 @@ export const routes: Routes = [
     path: 'galapagos',
     loadComponent: () => import('./presentation/regions/galapagos/galapagos.page').then(m => m.GalapagosPage)
   },
+  {
+    path: 'gallery',
+    loadComponent: () => import('./presentation/gallery/gallery.page').then(m => m.GalleryPage)
+  },
 ];

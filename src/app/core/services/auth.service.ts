@@ -89,6 +89,7 @@ export class AuthService {
                 user: userCredential.user
             };
         } catch (error: any) {
+            console.error('Login Error Code:', error.code);
             return {
                 success: false,
                 message: this.getErrorMessage(error.code)
